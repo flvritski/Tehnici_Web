@@ -1,0 +1,72 @@
+{
+	"cale_galerie":"resurse/imagini/galerie",
+	"imagini": [
+		{
+			"fisier":"violin.png",
+			"descriere":"Violin",
+			"anotimp":["iarna"]
+		},
+		{
+			"fisier":"trombone.png",
+			"descriere":"Trombone",
+			"anotimp":["primavara", "vara"]
+			
+		},
+		{
+			"fisier":"dulcimer.png",
+			"descriere":"Dulcimer",
+			"anotimp":["toamna", "iarna", "primavara", "vara"]
+		},
+		{
+			"fisier":"saxofon.png",
+			"descriere":"Saxofon",
+            "anotimp": ["toamna"]
+		},
+		{
+			"fisier":"piano.png",
+			"descriere":"Pian"
+		},
+		{
+			"fisier":"ukulele.png",
+			"descriere":"Ukulele"
+		},
+		{
+			"fisier":"banjo.png",
+			"descriere":"Banjo"
+		},
+        {
+			"fisier":"bass.png",
+			"descriere":"Bass"
+		},
+        {
+			"fisier":"electric_drums.png",
+			"descriere":"Autoharp",
+			"anotimp":["toamna", "iarna", "primavara", "vara"]
+		},
+		{
+			"fisier":"cello.png",
+			"descriere":"Cello",
+            "anotimp": ["toamna"]
+		},
+		{
+			"fisier":"clarinet.png",
+			"descriere":"Clarinet"
+		},
+		{
+			"fisier":"didgeridoo.png",
+			"descriere":"Didgeridoo"
+		},
+		{
+			"fisier":"drums.png",
+			"descriere":"Drums"
+		},
+		{
+			"fisier":"flute.png",
+			"descriere":"Flute"
+		},
+		{
+			"fisier":"autoharp.png",
+			"descriere":"Electric Drums"
+		}
+	]
+}

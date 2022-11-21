@@ -1,0 +1,101 @@
+iframe{
+  border: 2px solid black;
+  border-left: 4px solid black;
+  border-right: 4px solid black;
+  border-bottom: 10px solid black;
+  /* padding: 10px;
+  padding-right: 100px; */
+  width: 100%;
+}
+.worko-tabs {
+  margin: 20px;
+  width: 80%;
+}
+
+.state {
+  position: absolute;
+  left: -10000px;
+}
+#absolute{
+  position: absolute;
+  right: 20px;
+  display: flex;
+  margin-right: 20%;
+  margin-left: 20%;
+}
+
+.flex-tabs {
+  display: block;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+
+.tab {
+  flex-grow: 1;
+  max-height: 40px;
+  display: inline-block;
+  padding: 10px;
+  vertical-align: top;
+  background-color: #6AB1FC;
+  cursor: hand;
+  cursor: pointer;
+  border-left: 10px solid #1A2B3D;
+  border-bottom: 8px solid #1A2B3D;
+  transition: 1s;
+  border-radius: 20px;
+  /* position: absolute; */
+}
+.tab:hover {
+  background-color: rgb(107, 229, 131);
+}
+
+.panel {
+  background-color: rgba(158, 52, 52, 0);
+  min-height: 300px;
+  display: none;
+  width: 100%;
+  flex-basis: auto;
+}
+
+#tab-one:checked ~ .tabs #tab-one-label {
+  background-color: white;
+  cursor: default;
+  border-left-color: black;
+  border-bottom-color: black;
+}
+#tab-one:checked ~ .tabs #tab-one-panel {
+  display: block;
+}
+
+#tab-two:checked ~ .tabs #tab-two-label {
+  background-color: white;
+  cursor: default;
+  border-left-color: black;
+  border-bottom-color: black;
+}
+#tab-two:checked ~ .tabs #tab-two-panel {
+  display: block;
+}
+
+#tab-three:checked ~ .tabs #tab-three-label {
+  background-color: white;
+  cursor: default;
+  border-left-color: black;
+  border-bottom-color: black;
+}
+#tab-three:checked ~ .tabs #tab-three-panel {
+  display: block;
+}
+
+#tab-four:checked ~ .tabs #tab-four-label {
+  background-color: white;
+  cursor: default;
+  border-left-color: black;
+  border-bottom-color: black;
+}
+#tab-four:checked ~ .tabs #tab-four-panel {
+  display: block;
+}
+
+/*# sourceMappingURL=tabs.css.map */
