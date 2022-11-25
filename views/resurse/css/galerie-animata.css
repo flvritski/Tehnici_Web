@@ -25,7 +25,7 @@
     position: absolute;
     left: 0;
     top: 0;
-    z-index: 0;
+    z-index: 1;
     animation-name: gal_exemplu;
     animation-timing-function: linear;
     animation-iteration-count: infinite;
@@ -37,20 +37,22 @@
 #galerie-animata figure:nth-of-type(7){
     animation-delay: 0s;
 }
-
 #galerie-aniamata figure:nth-of-type(6){
     animation-delay: 3s;
 }
-
 #galerie-aniamata figure:nth-of-type(5){
     animation-delay: 6s;
-}#galerie-aniamata figure:nth-of-type(4){
+}
+#galerie-aniamata figure:nth-of-type(4){
     animation-delay: 9s;
-}#galerie-aniamata figure:nth-of-type(3){
+}
+#galerie-aniamata figure:nth-of-type(3){
     animation-delay: 12s;
-}#galerie-aniamata figure:nth-of-type(2){
+}
+#galerie-aniamata figure:nth-of-type(2){
     animation-delay: 15s;
-}#galerie-aniamata figure:nth-of-type(1){
+}
+#galerie-aniamata figure:nth-of-type(1){
     animation-delay: 18s;
 }
 
@@ -81,12 +83,12 @@
         transform: skew(0deg);
     }
     85.714288%{
-        z-index: 0;
+        z-index: 1;
         opacity: 1;
     }
     100%{
         opacity: 1;
-        z-index: 0;
+        z-index: 1;
     }
 }
 

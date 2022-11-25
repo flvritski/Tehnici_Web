@@ -1,0 +1,27 @@
+@mixin coverer {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .video-header {
+    position: absolute;
+    text-align: center;
+    width: 100vw;
+    height: 100vh;
+    &, video, .viewport-header {
+      @include coverer;
+    }
+    video {
+      background: brown;
+      object-fit: cover;
+    }
+    .title {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+  

@@ -6,10 +6,14 @@ html, body{
     width: 100%;
     height: 100%;
     margin: 0;
-    font-family: Verdana ;
+    font-family: ui-monospace ;
 }
-.title {
-    padding: 20px;
+h1.title {
+    padding: 10px;
+    background-image: url('../brian-lundquist-T2FzrH8GCLg-unsplash.jpg');
+    background-attachment: fixed;
+    background-position: center top;
+    background-size: 100% auto;
 }
 
 header{
@@ -27,6 +31,9 @@ footer{
     background-color: var(--culoare-footer);
 }
 
+.mapouter{position:relative;text-align:right;height:120px;width:600px;}
+.gmap_canvas {overflow:hidden;background:none!important;height:120px;width:600px;}
+
 h2{
     padding: 10px;
 }
@@ -43,6 +50,11 @@ details{
     display: grid;
     /*grid-template-columns: 1fr 1fr 1fr; */
     border:3px solid black;
+    background-image: url('../brian-lundquist-gpsxcmxYAVs-unsplash.jpg') ;
+    background-attachment: fixed;
+    background-position: center top;
+    background-size: 100% auto;
+    
 }
 
 #grid-zona-8{
@@ -81,6 +93,8 @@ details{
 #poze img {
     width: 100%;
 }
+
+
 
 @media screen and (max-width: 480px) {
     #grid-zona-2-3-4{

@@ -30,7 +30,7 @@
 			"fisier":"ukulele.png",
 			"descriere":"Ukulele"
 		},
-		{
+        {
 			"fisier":"banjo.png",
 			"descriere":"Banjo"
 		},
@@ -68,5 +68,6 @@
 			"fisier":"autoharp.png",
 			"descriere":"Electric Drums"
 		}
+		
 	]
 }
