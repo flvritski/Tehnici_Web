@@ -14,6 +14,7 @@ h1.title {
     background-attachment: fixed;
     background-position: center top;
     background-size: 100% auto;
+    margin-bottom: 0px;
 }
 
 header{
@@ -62,6 +63,9 @@ details{
     display: inline-flex;
     border: 3px solid black;
    
+}
+#grid-zona-8 img{
+    padding: 5px;
 }
 
 #grid-zona-2-3-4{

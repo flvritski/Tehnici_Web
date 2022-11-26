@@ -23,7 +23,8 @@ app.use("/node_modules", express.static(__dirname+"/node_modules"));
 
 obGlobal={
   erori:null,
-  imagini:null
+  imagini:null,
+  imagini_random:null
 }
 
 
@@ -34,6 +35,8 @@ function createErrors(){
   //console.log(obErori.erori);
 }
 createErrors();
+
+
 
 function createImages(){
   var continutFisier=fs.readFileSync(__dirname+"/views/resurse/json/galerie.json").toString("utf8");
@@ -72,18 +75,27 @@ function renderError(res, identificator, titlu, text, imagine){
   }
 }
 
-
 app.get(["/", "/index", "/home"], function(req,res,next){
-  res.render("pagini/index" , {ip: req.ip, imagini: obGlobal.imagini });
+  res.render("pagini/index" , {ip: req.ip, imagini: obGlobal.imagini, imagini_random: obGlobal.imagini_random });
 })
+
 
 app.get("*/galerie-animata.css",function(req, res){
 
   var sirScss=fs.readFileSync(__dirname+"/views/resurse/scss/galerie_animata.scss").toString("utf8");
   var culori=["navy","black","purple","grey"];
+  var numar_imagini = [7,8,9,11];
   var indiceAleator=Math.floor(Math.random()*culori.length);
   var culoareAleatoare=culori[indiceAleator]; 
-  rezScss=ejs.render(sirScss,{culoare:culoareAleatoare});
+  obGlobal.imagini_random = obGlobal.imagini
+    .map(x=> ({x,r: Math.random()}))
+    .sort((a,b) => a.r - b.r)
+    .map(a => a.x)
+    .slice(0, numar_imagini[indiceAleator]);
+  
+  console.log(obGlobal.imagini_random);
+
+  rezScss=ejs.render(sirScss,{culoare:culoareAleatoare, nrimag:numar_imagini[indiceAleator]});
   console.log(rezScss);
   var caleScss=__dirname+"/views/temp/galerie_animata.scss"
   fs.writeFileSync(caleScss,rezScss);
@@ -101,6 +113,9 @@ app.get("*/galerie-animata.css",function(req, res){
       res.send("Eroare");
   }
 });
+
+
+
 
 app.get("*/galerie-animata.css.map", function(req,res) {
   res.sendFile(path.join(__dirname, "/views/temp/galerie_animata.css.map"));

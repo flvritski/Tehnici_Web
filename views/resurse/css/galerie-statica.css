@@ -141,6 +141,7 @@
     }
 
     /* tabel transpus */
+
     #transpus thead,tbody,tr {
         display: block; 
         float: left;

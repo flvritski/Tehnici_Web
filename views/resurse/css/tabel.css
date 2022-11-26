@@ -37,4 +37,10 @@ tr:hover td:last-child {
   white-space: nowrap;
 }
 
+@media screen and (max-width: 300px) {
+  #tab-orar {
+    overflow: scroll;
+  }
+}
+
 /*# sourceMappingURL=tabel.css.map */
