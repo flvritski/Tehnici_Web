@@ -147,7 +147,7 @@ nav {
   display: none;
 }
 
-label {
+nav label {
   display: none;
   height: var(--inaltime-meniu);
 }

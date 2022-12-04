@@ -41,7 +41,7 @@
 
 #galerie-animata figure:hover {
   animation-play-state: paused;
-  animation: none;
+  animation-delay: 2s;
 }
 
 #galerie-animata figure:nth-of-type(8) {

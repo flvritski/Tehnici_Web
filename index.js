@@ -11,6 +11,16 @@ var cssBootstrap = sass.compile(__dirname + "/views/resurse/scss/customizare-boo
 fs.writeFileSync(__dirname + "/views/resurse/css/biblioteci/customizare-bootstrap.css", cssBootstrap.css);
 const sharp = require('sharp');
 
+var client = new Client({database: "florinstefan",
+  user: "florinstefan",
+  password: "1234",
+  host: "localhost",
+  port: 5432
+});
+client.connect();
+
+
+
 const app = express();
 
 
@@ -79,6 +89,37 @@ app.get(["/", "/index", "/home"], function(req,res,next){
   res.render("pagini/index" , {ip: req.ip, imagini: obGlobal.imagini, imagini_random: obGlobal.imagini_random });
 })
 
+app.get("/produse", function(req, res){
+
+  client.query("select * from unnest(enum_range(null::categ_instrument))", function(err, rezCateg){
+    continuareQuery = "";
+    if (req.query.tip)
+    continuareQuery +=`and tip_produs='${req.query.tip}'`; //"tip='"+req.query.tip+"'"
+    console.log(req.query.tip)
+  client.query("select * from instrumente where 1=1 "+continuareQuery, function(err, rez){
+    if (err) {
+      console.log(err);
+      renderError(res, 2);
+    }
+      else
+        res.render("pagini/produse", {produse: rez.rows, optiuni: rezCateg.rows});
+    });
+  });
+});
+
+
+
+
+app.get("/produs/:id", function(req,res){
+    client.query("select * from instrumente where id="+req.params.id, function(err, rez){
+    if (err){
+      console.log(err);
+      renderError(res, 2);
+    }
+    else 
+      res.render("pagini/produs", {prod: rez.rows[0]});
+    });
+})
 
 app.get("*/galerie-animata.css",function(req, res){
 
