@@ -47,15 +47,6 @@
 }
 
 
-body {
-  --inaltime-meniu: 25px;
-  --latime-buton: 100px;
-  --culoare-meniu: rgb(255, 255, 255);
-  --culoare-meniu-selectat: #6A49FC;
-  --latime-bord-meniu: 1px;
-  --selection-color: rgb(255,0,0);
-  --background-selection-color: rgb(255,255,0);
-}
 
 .fa-solid {
   display: inline-block;

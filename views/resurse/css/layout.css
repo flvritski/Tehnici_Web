@@ -17,18 +17,87 @@ h1.title {
     margin-bottom: 0px;
 }
 
+body {
+    --inaltime-meniu: 25px;
+    --latime-buton: 100px;
+    --culoare-meniu: rgb(255, 255, 255);
+    --culoare-meniu-selectat: #6A49FC;
+    --latime-bord-meniu: 1px;
+    --cl-text:black;
+    --selection-color: rgb(255,0,0);
+    --background-selection-color: rgb(255,255,0);
+    --culoare-background:  #1a1434;
+
+  }
+  
+  
+  body.dark{
+    --culoare-meniu: rgba(255, 255, 255, 0.363);
+    --culoare-meniu-selectat: #cdccd08f;
+    --cl-text:white;
+    --selection-color: rgba(255, 0, 0, 0.215);
+    --background-selection-color: rgba(255, 255, 0, 0.317);
+    --culoare-background:  #2d2d2d;
+  }
+  
+  body.light{
+    --culoare-meniu: rgb(255, 255, 255);
+    --culoare-meniu-selectat: #cdccd08f;
+    --cl-text:rgb(0, 0, 0);
+    --selection-color: rgba(255, 0, 0, 0.215);
+    --background-selection-color: rgb(252, 252, 251);
+    --culoare-background:  #ffffff;
+  }
+  
+
+  body{
+    margin-top:0;
+    margin-bottom:0;
+    --body-padding:3rem;
+  
+    --padding-intern:4%;
+    color:var(--cl-text);
+    /*am adaugat doua imagini de background separandu-le cu virgula*/
+    /* background-image:var(--gradient-body), var(--imag-body-backgr); */
+    background-repeat: no-repeat;
+  
+    /* background-ul va ramane fix cand dam scroll*/
+    background-attachment: fixed;
+  
+    /*imaginea de background sa acopere tot containerul*/
+    background-size: cover;
+    padding-left:var(--body-padding);
+    padding-right:var(--body-padding);
+    padding-top:0;
+    padding-bottom:0;
+  
+    /*nu permite body-ului sa se micsoreze mai mult de atat
+    deoarece pagina nu ar mai putea fi parcursa
+    trebuie mereu setata o latime minima pentru pagina
+    pentru a nu risca sa avem afisat cate un singur cuvant pe rand...*/
+    min-width:330px;/*latimea minima trebuie sa fie mai mica decat orice latime de dispozitiv pentru a nu avea scroll orizontal*/
+    background-color: var(--culoare-background);
+  }
+  
+
 header{
     --culoare-header: #1A123D;
     background-color: var(--culoare-header);    
 }
 
 main{
-    --culoare-main: #4F37BD;
-    background-color: var(--culoare-main);
+    /* --culoare-main: #4F37BD;
+    background-color: var(--culoare-main); */
+    --main-border:1px solid grey;
+    /* background:var(--cl-light-t); */
+    border-left:var(--main-border);
+    border-right:var(--main-border);
+    padding-bottom: 2rem;
+        
 }
 
 footer{
-    --culoare-footer: #34247D;
+    --culoare-footer: #3b3b3b;
     background-color: var(--culoare-footer);
 }
 

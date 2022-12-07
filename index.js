@@ -84,6 +84,9 @@ function renderError(res, identificator, titlu, text, imagine){
       res.render("pagini/eroare", {titlu:titlu, text:text, imagine:imagine});
   }
 }
+function compareNumbers(a, b) {
+  return a - b;
+}
 
 app.get(["/", "/index", "/home"], function(req,res,next){
   res.render("pagini/index" , {ip: req.ip, imagini: obGlobal.imagini, imagini_random: obGlobal.imagini_random });
@@ -102,7 +105,18 @@ app.get("/produse", function(req, res){
       renderError(res, 2);
     }
       else
-        res.render("pagini/produse", {produse: rez.rows, optiuni: rezCateg.rows});
+      set_garantie = new Set();
+      for(let i=0;i<rez.rows.length;i++){
+        set_garantie.add(rez.rows[i].garantie)
+      }
+      // console.log(set_garantie)
+      lista_garantie = Array.from(set_garantie)
+      console.log(lista_garantie)
+      obiecte_gramaj = rez.rows.sort((a,b) => a.gramaj - b.gramaj);
+      res.render("pagini/produse", {produse: rez.rows, optiuni: rezCateg.rows, val1: obiecte_gramaj[4].gramaj, val2: obiecte_gramaj[11].gramaj, val3: obiecte_gramaj[obiecte_gramaj.length - 1].gramaj,
+                                          garantie: rez.rows.filter((value, index, self) => index===self.findIndex((t)=> (
+                                            t.garantie===value.garantie)
+                                          ))});
     });
   });
 });
@@ -154,6 +168,7 @@ app.get("*/galerie-animata.css",function(req, res){
       res.send("Eroare");
   }
 });
+
 
 
 

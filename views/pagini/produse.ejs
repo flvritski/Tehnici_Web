@@ -7,42 +7,32 @@
 
     <main>
         <label> Nume: <input class="form-control" aria-label="small" type="text" id="inp-nume"></label>
+        <!-- <div class="form-floating sm-12">
+            <input type="email" class="form-control" aria-label="small" id="floatingInput" placeholder="Harley">
+            <label for="floatingInput">Nume </label>
+          </div> -->
         <!-- <label> Maxim calorii: <input type="number" id="inp-calorii" value="10000"></label> -->
         
         <!-- trebuie sa aiba acelasi name ca sa formeze un grup -->
-        <!-- <div> Calorii:
-            <p><label>Dietetic (calorii &lt; 350)
-                <input id="i_rad1"  name="gr_rad" value="0:350" type="radio"/>
-            </label></p>
-            <p><label>Mediu (350 &le; calorii &lt; 700)
-                <input id="i_rad2"  name="gr_rad" value="350:750" type="radio"/>
-            </label>
-            <p><label>Ridicat caloric (700 &le; calorii)
-                <input id="i_rad3" name="gr_rad" value="700:1000000000" type="radio"/>
-            </label>
-            <p><label>Toate
-                <input id="i_rad4" checked name="gr_rad" value="toate" type="radio"/>
-            </label>
-        </div> -->
-
+        
         <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" value="0:350" name="flexRadioDefault" id="i_rad1">
+            <input class="form-check-input" type="radio" value="<%- locals.val1 %>" name="flexRadioDefault" id="i_rad1">
             <label class="form-check-label" for="i_rad1">
-              Decibeli (&lt; 350)
+              Decibeli (&lt; <%- locals.val1 %>)
             </label>
         </div>
 
         <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" value="350:700" name="flexRadioDefault" id="i_rad2">
+            <input class="form-check-input" type="radio" value="<%- locals.val1 %>:<%- locals.val2 %>" name="flexRadioDefault" id="i_rad2">
             <label class="form-check-label" for="i_rad2">
-              Mediu (350 &le; decibeli &lt; 700)
+              Mediu (<%- locals.val1 %> &le; decibeli &lt; <%- locals.val2 %>)
             </label>
         </div>
 
         <div class="form-check form-check-inline">
             <input class="form-check-input" type="radio" value="700" name="flexRadioDefault" id="i_rad3">
             <label class="form-check-label" for="i_rad3">
-              Ridicat (700 &le; decibeli)
+              Ridicat (<%- locals.val2 %> &le; decibeli)
             </label>
         </div>
 
@@ -74,6 +64,15 @@
           </select>
           </label>
           </div>
+          <div class="col-md-3">
+          <label class="form-label select-label">Multiplu select:
+          <select id="inp-garantie" class="form-select" multiple aria-label="multiple select example">
+            <% for (let prod of locals.garantie) { %>
+                <option value="<%- prod.garantie %>"><%- prod.garantie %></option>
+            <% } %>
+              </select>
+            </label>
+          </div>
           </div>
           
         <!-- <label>Select simplu:
@@ -100,7 +99,8 @@
         </div>
         
         
-        <p id="p-suma">Apăsați Alt+"c" pentru suma preturilor produselor afișate. </p>
+        <p id="p-suma">Apăsați butonul pentru suma preturilor produselor afișate. </p>
+        <button class="btn btn-warning" id="btn-suma">Total</button>
         <section id="produse">
             <h2>Produse</h2>
             <div class="grid-produse">
@@ -111,7 +111,7 @@
                             <p class="pret">Pret: <span class="val-pret"><%- prod.pret%></span></p>
                             <p class="garantie">Garantie: <span class="val-garantie"><%- prod.garantie%></span></p>
                             <p class="gramaj">Decibeli: <span class="val-gramaj"><%- prod.gramaj%></span></p>
-                            <p class="voucher">Voucher: <span class="val-voucher"><%- prod.voucher%></span></p>
+                            <p class="voucher" style="display: none;">Voucher: <span class="val-voucher"><%- prod.voucher%></span></p>
                         </div>
                         <p class="categorie">Categorie:<span class="val-categorie"><%- prod.categorie%></span></p>
                         <figure>

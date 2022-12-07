@@ -73,7 +73,6 @@
 ------- reflexion ------ */
 #text-reflectat{
 	position:absolute;
-	left:0;
 	top:auto;
 	transform-origin:0 0;
 	/*conetaza ordinea transformarilor!*/
