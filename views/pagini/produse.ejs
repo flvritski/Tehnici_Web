@@ -73,6 +73,16 @@
               </select>
             </label>
           </div>
+          <div class="col-md-3">
+            <label for="exampleDataList" class="form-label">Datalist</label>
+                <input class="form-control" list="inp-datalist" id="exampleDataList" placeholder="Type to search...">
+                <datalist id="inp-datalist">
+                   <% for (let tip of locals.tip_produs) { %>
+                    <option value="<%- tip.tip_produs %>"><%- tip.tip_produs %></option>
+                <% } %>
+                </datalist>
+
+          </div>
           </div>
           
         <!-- <label>Select simplu:
@@ -112,6 +122,8 @@
                             <p class="garantie">Garantie: <span class="val-garantie"><%- prod.garantie%></span></p>
                             <p class="gramaj">Decibeli: <span class="val-gramaj"><%- prod.gramaj%></span></p>
                             <p class="voucher" style="display: none;">Voucher: <span class="val-voucher"><%- prod.voucher%></span></p>
+                            <p class="tip" style="display: none;">Tip Produs: <span class="val-tip"><%- prod.tip_produs%></span></p>
+
                         </div>
                         <p class="categorie">Categorie:<span class="val-categorie"><%- prod.categorie%></span></p>
                         <figure>

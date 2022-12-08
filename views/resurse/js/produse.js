@@ -18,6 +18,9 @@ window.addEventListener("load", function(){
         const values = Array.from(selected).map(el => el.value);
         console.log(values)
 
+        //datalist
+        var datalist_values = document.getElementById("exampleDataList").value;
+
         //rad1
         var inpRad1 = document.getElementById("i_rad1").value;
         var val_superioara_rad1 = parseInt(inpRad1.replace('0:', ''));
@@ -53,6 +56,10 @@ window.addEventListener("load", function(){
             }
             let garantie = produs.getElementsByClassName("val-garantie")[0].innerHTML;
             if (values.includes(garantie)){
+                produs.style.display="block";
+            }
+
+            if (produs.getElementsByClassName("val-tip")[0].innerHTML === datalist_values ){
                 produs.style.display="block";
             }
 

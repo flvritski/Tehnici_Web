@@ -105,18 +105,22 @@ app.get("/produse", function(req, res){
       renderError(res, 2);
     }
       else
-      set_garantie = new Set();
-      for(let i=0;i<rez.rows.length;i++){
-        set_garantie.add(rez.rows[i].garantie)
-      }
-      // console.log(set_garantie)
-      lista_garantie = Array.from(set_garantie)
-      console.log(lista_garantie)
+      // set_garantie = new Set();
+      // for(let i=0;i<rez.rows.length;i++){
+      //   set_garantie.add(rez.rows[i].garantie)
+      // }
+      // // console.log(set_garantie)
+      // lista_garantie = Array.from(set_garantie)
+      // console.log(lista_garantie)
+      
       obiecte_gramaj = rez.rows.sort((a,b) => a.gramaj - b.gramaj);
       res.render("pagini/produse", {produse: rez.rows, optiuni: rezCateg.rows, val1: obiecte_gramaj[4].gramaj, val2: obiecte_gramaj[11].gramaj, val3: obiecte_gramaj[obiecte_gramaj.length - 1].gramaj,
                                           garantie: rez.rows.filter((value, index, self) => index===self.findIndex((t)=> (
                                             t.garantie===value.garantie)
-                                          ))});
+                                          )),
+                                        tip_produs: rez.rows.filter((value, index, self) => index===self.findIndex((t)=> (
+                                          t.tip_produs===value.tip_produs))) 
+                                        });
     });
   });
 });
