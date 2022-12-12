@@ -17,7 +17,7 @@
                 <ul>
                     <li><a href="/index"><i class="fa fa-long-arrow-right"></i>Welcome</a></li>
                     <li><a href="/promotii"><i class="fa fa-long-arrow-right"></i>Promotii</a></li>
-                    <li><a href="#anunturi"><i class="fa fa-long-arrow-right"></i>Anunturi</a></li>
+                    <li><a href="#anunturi" onclick="test(anunturi)"><i class="fa fa-long-arrow-right"></i>Anunturi</a></li>
                     <li><a href="#produse"><i class="fa fa-long-arrow-right"></i>Oferta</a></li>
                     <li><a href="#orar"><i class="fa fa-long-arrow-right"></i>Orar</a></li>
                     <li><a href="#index-intrebari"><i class="fa fa-long-arrow-right"></i>Întrebări</a></li>
@@ -53,8 +53,41 @@
             margin-left: 10 rem;
             margin-left: 10 rem;
             padding-left: 10 rem;
-            float: right;">Schimba tema</button>
+            float: right;"><i class="fas fa-moon"></i></button>
 
         </ul>
     </nav>  
 </header>
+
+<script>
+function scrollTo(to, duration) {
+    if (document.body.scrollTop == to) return;
+    var diff = to - document.body.scrollTop;
+    var scrollStep = Math.PI / (duration / 10);
+    var count = 0, currPos;
+    start = element.scrollTop;
+    scrollInterval = setInterval(function(){
+        if (document.body.scrollTop != to) {
+            count = count + 1;
+            currPos = start + diff * (0.5 - 0.5 * Math.cos(count * scrollStep));
+            document.body.scrollTop = currPos;
+        }
+        else { clearInterval(scrollInterval); }
+    },10);
+}
+function test(elID)
+{
+    var dest = document.getElementById(elID);
+    scrollTo(dest.offsetTop, 500);
+}
+var url = location.href; 
+var navLinks = document.getElementsByTagName("nav")[0].getElementsByTagName("a");
+console.log(navLinks);
+for(let i=0;i<navLinks.length;i++){
+  if( navLinks[i].href == url) {
+   navLinks[i].className = "current";
+
+  }
+  }
+
+</script>

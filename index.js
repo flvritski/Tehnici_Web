@@ -2,10 +2,11 @@ const express = require('express');
 const ejs = require('ejs');
 const sass = require('sass');
 const {Client} = require('pg');
-
+const {Utilizator} = require('./module_proprii/utilizator.js')
 
 var ip = require('ip');
 const fs=require("fs");
+const formidable=require("formidable");
 
 var cssBootstrap = sass.compile(__dirname + "/views/resurse/scss/customizare-bootstrap.scss", {sourceMap:true});
 fs.writeFileSync(__dirname + "/views/resurse/css/biblioteci/customizare-bootstrap.css", cssBootstrap.css);
@@ -45,6 +46,7 @@ function createErrors(){
   //console.log(obErori.erori);
 }
 createErrors();
+
 
 
 
@@ -115,11 +117,12 @@ app.get("/produse", function(req, res){
       
       obiecte_gramaj = rez.rows.sort((a,b) => a.gramaj - b.gramaj);
       res.render("pagini/produse", {produse: rez.rows, optiuni: rezCateg.rows, val1: obiecte_gramaj[4].gramaj, val2: obiecte_gramaj[11].gramaj, val3: obiecte_gramaj[obiecte_gramaj.length - 1].gramaj,
+                                          val4: obiecte_gramaj[obiecte_gramaj.length],
                                           garantie: rez.rows.filter((value, index, self) => index===self.findIndex((t)=> (
                                             t.garantie===value.garantie)
                                           )),
                                         tip_produs: rez.rows.filter((value, index, self) => index===self.findIndex((t)=> (
-                                          t.tip_produs===value.tip_produs))) 
+                                          t.tip_produs===value.tip_produs))),
                                         });
     });
   });
@@ -174,6 +177,51 @@ app.get("*/galerie-animata.css",function(req, res){
 });
 
 
+
+//////////////////Utilizatori
+app.post("/inregistrare",function(req, res){
+  var username;
+  console.log("ceva");
+  var formular= new formidable.IncomingForm()
+  formular.parse(req, function(err, campuriText, campuriFisier ){
+      console.log(campuriText);
+
+      var eroare="";
+
+      var utilizatorNou = new Utilizator();
+      try{
+        utilizatorNou.setareNume(campuriText.nume);
+        utilizatorNou.setareUsername(campuriText.username)
+      }
+      catch(e) {
+        eroare += e.message
+      }
+
+      if(!eroare){
+         
+      }
+      else
+          res.render("pagini/inregistrare", {err: "Eroare: "+eroare});
+  });
+  formular.on("field", function(nume,val){  // 1
+ 
+      console.log(`--- ${nume}=${val}`);
+     
+      if(nume=="username")
+          username=val;
+  })
+  formular.on("fileBegin", function(nume,fisier){ //2
+      console.log("fileBegin");
+     
+      console.log(nume,fisier);
+      //TO DO in folderul poze_uploadate facem folder cu numele utilizatorului
+
+  })    
+  formular.on("file", function(nume,fisier){//3
+      console.log("file");
+      console.log(nume,fisier);
+  });
+});
 
 
 

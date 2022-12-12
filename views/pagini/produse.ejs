@@ -6,10 +6,21 @@
     <%- include("../fragmente/header.ejs") %>
 
     <main>
-        <label> Nume: <input class="form-control" aria-label="small" type="text" id="inp-nume"></label>
+        <div class="row" style="padding-top: 25px;">
+        <div class="col-md-3">
+            <div class="form-floating mb-3">
+                <input type="email" class="form-control" id="inp-nume" placeholder="Harley">
+                <label for="inp-nume">Nume</label>
+              </div>
+            </div>
+        </div>
+        <!-- <p class="mistake" style="display: none;">Input gresit!</p> -->
         <!-- <div class="form-floating sm-12">
             <input type="email" class="form-control" aria-label="small" id="floatingInput" placeholder="Harley">
             <label for="floatingInput">Nume </label>
+            input: Mai multe cuvinte
+            input: Mbi multe cuvinte
+            -> output: Mai multe cuvinte
           </div> -->
         <!-- <label> Maxim calorii: <input type="number" id="inp-calorii" value="10000"></label> -->
         
@@ -37,7 +48,7 @@
         </div>
 
         <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" value="0:350" name="flexRadioDefault" id="i_rad4">
+            <input class="form-check-input" type="radio" value="0:<%- locals.val4 %>" name="flexRadioDefault" id="i_rad4">
             <label class="form-check-label" for="i_rad4">
               Toate
             </label>
@@ -49,7 +60,56 @@
             <label class="form-check-label" for="inp-voucher">
               Voucher
             </label>
-          </div>
+        </div>
+        <div class="form-check" style="padding:24px; display: none;">
+            <input class="form-check-input" type="checkbox" value="" id="inp-not-voucher">
+            <label class="form-check-label" for="inp-not-voucher">
+              Not Voucher
+            </label>
+        </div>
+        <div class="row" style="padding: 24px;">
+            <div class="col-sm-6">
+        <div class="form-check">
+            <input class="form-check-input" type="radio" value="0:<%- locals.val4 %>" name="flexRadioDefault" id="are">
+            <label class="form-check-label" for="are">
+              Are
+            </label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" value="0:<%- locals.val4 %>" name="flexRadioDefault" id="nu-are">
+            <label class="form-check-label" for="nu-are">
+              N-are
+            </label>
+            </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-check form-check-inline" style="padding:24px;">
+                    <input class="form-check-input" type="checkbox" value="" id="cuv-cheie-1">
+                    <label class="form-check-label" for="cuv-cheie-1">
+                      Harley
+                    </label>
+                </div>
+                <div class="form-check form-check-inline" style="padding:24px;">
+                    <input class="form-check-input" type="checkbox" value="" id="cuv-cheie-2">
+                    <label class="form-check-label" for="cuv-cheie-2">
+                      Startone
+                    </label>
+                </div>
+                <div class="form-check form-check-inline" style="padding:24px;">
+                    <input class="form-check-input" type="checkbox" value="" id="cuv-cheie-3">
+                    <label class="form-check-label" for="cuv-cheie-3">
+                      Millenium
+                    </label>
+                </div>
+                <div class="form-check form-check-inline" style="padding:24px;">
+                    <input class="form-check-input" type="checkbox" value="" id="cuv-cheie-4">
+                    <label class="form-check-label" for="cuv-cheie-4">
+                      Kawai
+                    </label>
+                </div>
+            </div>
+        </div>
+        </div>
 
 
         <label> Pret maxim: <input class="form-range" type="range" id="inp-pret" value="0" min="0"  max="15000"> <span id="infoRange">(0)</span></label>
@@ -65,7 +125,7 @@
           </label>
           </div>
           <div class="col-md-3">
-          <label class="form-label select-label">Multiplu select:
+          <label class="form-label select-label">Garantie ( Multiplu select ):
           <select id="inp-garantie" class="form-select" multiple aria-label="multiple select example">
             <% for (let prod of locals.garantie) { %>
                 <option value="<%- prod.garantie %>"><%- prod.garantie %></option>
@@ -74,7 +134,7 @@
             </label>
           </div>
           <div class="col-md-3">
-            <label for="exampleDataList" class="form-label">Datalist</label>
+            <label for="exampleDataList" class="form-label">Tip Acustic/Electric/Accesorii ( Datalist ):</label>
                 <input class="form-control" list="inp-datalist" id="exampleDataList" placeholder="Type to search...">
                 <datalist id="inp-datalist">
                    <% for (let tip of locals.tip_produs) { %>
@@ -107,35 +167,51 @@
                 <button class="btn btn-success" id="sortDescrescNume">Sorteaza descrescator dupa pret si nume</button>
             </div>
         </div>
+
         
+        <p id="output"></p>
+        <div id="output2"></div>
         
         <p id="p-suma">Apăsați butonul pentru suma preturilor produselor afișate. </p>
         <button class="btn btn-warning" id="btn-suma">Total</button>
         <section id="produse">
-            <h2>Produse</h2>
+            <h2 id="h2-produse">Produse</h2>
             <div class="grid-produse">
+                
                 <% for( let prod of locals.produse) { %>
-                    <article class="produs" >
+                    <!-- <div class="col-sm-6" style="padding:10px;"> -->
+                        <article class="produs" id="output2" >
                         <h3 class="nume">Nume: <a href="/produs/<%-prod.id %>" ><span class="val-nume"><%- prod.nume%></span></a></h3>
-                        <div class="info-prod">
-                            <p class="pret">Pret: <span class="val-pret"><%- prod.pret%></span></p>
-                            <p class="garantie">Garantie: <span class="val-garantie"><%- prod.garantie%></span></p>
-                            <p class="gramaj">Decibeli: <span class="val-gramaj"><%- prod.gramaj%></span></p>
-                            <p class="voucher" style="display: none;">Voucher: <span class="val-voucher"><%- prod.voucher%></span></p>
-                            <p class="tip" style="display: none;">Tip Produs: <span class="val-tip"><%- prod.tip_produs%></span></p>
-
+                        <div class="row info-prod">
+                            <div class="col-sm-6">
+                                <figure>
+                                    <a href="/produs/<%-prod.id %>" ><img src="/resurse/imagini/produse/<%- prod.imagine %>" style="width:50%;height:auto;" alt="[imagine <%- prod.nume %>]" /></a>
+                                </figure>
+                                <ul class="detalii-prod">
+                                    <li><p class="pret">Pret: <span class="val-pret"><%- prod.pret%></span></p></li>
+                                    <li><p class="garantie">Garantie: <span class="val-garantie"><%- prod.garantie%></span></p></li>
+                                    <li><p class="gramaj">Decibeli: <span class="val-gramaj"><%- prod.gramaj%></span></p></li>
+                                    <li><p class="voucher">Voucher: <span class="val-voucher"><%- prod.voucher%></span></p></li>
+                                    <p class="tip" style="display: none;">Tip Produs: <span class="val-tip"><%- prod.tip_produs%></span></p>
+                                    <li><p class="culori">Culori: <span class="val-culori"><%- prod.culori%></span></p></li>
+                                </ul>
+                            </div>
+                            <div class="col-sm-6">
+                                <p class="categorie">Categorie: <span class="val-categorie"><%- prod.categorie%></span></p>
+                                <p class="descriere">Descriere: <span class="val-descriere"><%- prod.descriere%></span></p>
+                                <p class="data">Data adaugarii: <time><span class="val-time"><%- prod.data_adaugare%></span></time></p>
+                            </div>
                         </div>
-                        <p class="categorie">Categorie:<span class="val-categorie"><%- prod.categorie%></span></p>
-                        <figure>
-                            <a href="/produs/<%-prod.id %>" ><img src="/resurse/imagini/produse/<%- prod.imagine %>" style="width:50%;height:auto;" alt="[imagine <%- prod.nume %>]" /></a>
-                        </figure>
+                        
                         <label class="selecteaza-cos">
                             Selectează:<br/>
                             <input type="checkbox" class="select-cos" value="<%-prod.id %>" autocomplete="off">
                         </label>
                     </article>
-                <% }%>
-            </div>
+                    <% } %>
+
+                    </div>
+                    
         </section>
     </main>
 

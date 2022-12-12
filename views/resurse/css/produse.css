@@ -23,11 +23,27 @@ main{
     padding-bottom: 0.5rem;
 }
 
+input[type=radio]:checked{
+    outline: 1px solid red
+    
+}
+
+.info-prod p{
+    text-align:center;
+    font-weight:bold;
+}
+
+.detalii-prod > li, figure{
+    text-align: center;
+    list-style: none;
+}
+
+
 .grid-produse .produs h3 a{
     color:black;
 }
 .grid-produse .produs h3 a:hover{
-    color:white;
+    color:rgb(0, 0, 0);
 }
 .grid-produse .produs figure{
     text-align: center;
@@ -40,7 +56,6 @@ main{
     background-color: var(--cl-marcare);
 }
 .grid-produse .produs .info-prod p{
-    width:30%;
     text-align:center;
     font-weight:bold;
 }

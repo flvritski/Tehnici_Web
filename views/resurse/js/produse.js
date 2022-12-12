@@ -1,9 +1,68 @@
 
 window.addEventListener("load", function(){
     x=100
+
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+
+
     document.getElementById("inp-pret").onchange=function(){
         document.getElementById("infoRange").innerHTML = `(${this.value})`
     }
+    for (let i=0; i<document.getElementsByClassName("val-time").length; i++){
+        var currentDate = new Date(document.getElementsByClassName("val-time")[i].innerHTML)
+        var time = currentDate.toLocaleDateString('ro-RO', options)
+        document.getElementsByClassName("val-time")[i].innerHTML=time;
+        lista_cuvinte = document.getElementsByClassName("val-time")[i].innerHTML.split(" ")
+        lista_cuvinte[0]=lista_cuvinte[0].replace(",","")
+        zi = lista_cuvinte.splice(0,1)
+        zi = "[" + zi + "]"
+        lista_cuvinte.push(zi)
+        calendar = lista_cuvinte.join(" ")
+        document.getElementsByClassName("val-time")[i].innerHTML=calendar;
+
+        
+    }
+    
+    const delayLoop = (fn, delay) => {
+        return (x, i) => {
+          setTimeout(() => {
+            fn(x);
+          }, i * delay);
+        };
+      };
+      
+      const names = [
+        "Alberta",
+        "Barry",
+        "Charley",
+        "Christopher",
+        "Dianne",
+        "Ellen",
+        "Ethel",
+        "James",
+        "Jodee",
+        "Joseph",
+        "Lilia",
+        "Mark",
+        "Mary",
+        "Merri",
+        "Michael",
+        "Mildred",
+        "Randall",
+        "Roy",
+        "Thomas",
+        "Venus"
+      ];
+      
+      const output = document.querySelector("#output");
+      
+      const display = s => output.innerText = s;
+      
+      // names.forEach(display);
+      names.forEach(delayLoop(display, 1000));
+
+
+
     document.getElementById("filtrare").onclick=function(){
         condValidare = true;
         var inpNume=document.getElementById("inp-nume").value.toLowerCase().trim();
@@ -12,11 +71,11 @@ window.addEventListener("load", function(){
             alert("Inputuri gresite!");
             return;
         }
+        greseli_permise = 2;
         var inpCategorie=document.getElementById("inp-categorie").value;
         //select multiplu
         const selected = document.querySelectorAll('#inp-garantie option:checked');
         const values = Array.from(selected).map(el => el.value);
-        console.log(values)
 
         //datalist
         var datalist_values = document.getElementById("exampleDataList").value;
@@ -33,6 +92,7 @@ window.addEventListener("load", function(){
         var val_inferioara_rad3 = parseInt(inpRad3.split(":")[0]);
         //rad4
         var inpRad4 = document.getElementById("i_rad4").value;
+        var val_superioara_rad4 = inpRad4.split(":")[1];
         //inp-pret
         var inpPret = parseInt(document.getElementById("inp-pret").value);
         //voucher
@@ -41,12 +101,28 @@ window.addEventListener("load", function(){
 
         var produse=document.getElementsByClassName("produs");
 
+        counter = 0;
         for (let produs of produse){
-            var cond1=false, cond2=false, cond3=false, cond4=false, cond5=false, cond6=false,cond7=false, cond8=false;
-
+            var cond1=false, cond2=false, cond3=false, cond4=false, cond5=false, cond6=false,cond7=false, cond8=false,cond9=false;
+            
             produs.style.display="none";
 
             let nume= produs.getElementsByClassName("val-nume")[0].innerHTML.toLowerCase().trim();
+            mistakes=0;
+            
+            if (inpNume.length !== 0) {
+            for (i=0;i<inpNume.length;i++){
+                if(inpNume[i]!==nume[i]){
+                    mistakes++;
+                    }
+                }
+                if (mistakes<=2){
+                    inpNume = nume.toLowerCase().trim().split(" ")[0]
+                }
+            }   
+            
+            console.log(mistakes)
+
             if(nume.includes(inpNume) && inpNume.length != 0){
                 cond1=true;
             }
@@ -78,7 +154,7 @@ window.addEventListener("load", function(){
             if(document.getElementById("i_rad3").checked && parseInt(gramaj) >= val_inferioara_rad3){
                 cond5=true;
             }
-            if(document.getElementById("i_rad4").checked && parseInt(gramaj) <= 2500){
+            if(document.getElementById("i_rad4").checked && parseInt(gramaj) <= 25000){
                 cond6=true;
             }
             
@@ -88,6 +164,10 @@ window.addEventListener("load", function(){
             }
             if(document.getElementById("inp-voucher").checked===true && produs.getElementsByClassName("val-voucher")[0].innerHTML==="true"){
                 cond8=true;
+            }
+
+            if(document.getElementById("inp-not-voucher").checked===true && produs.getElementsByClassName("val-voucher")[0].innerHTML==="false"){
+                cond9=true;
             }
             
             if(cond3 ){
@@ -99,15 +179,31 @@ window.addEventListener("load", function(){
             if(cond5){
                 produs.style.display="block";
             }
+            if(cond6){
+                produs.style.display="block";
+            }
             if(cond7){
                 produs.style.display="block";
             }
             if(cond8){
                 produs.style.display="block";
             }
+            if(cond9){
+                produs.style.display="block";
+            }
             
             
+           
         }
+           
+            if(inpNume){
+                div_mistake.style.border = "1px solid purple";
+                div_negasit = document.createElement("div");
+                div_negasit.id = "inp-negasit"
+                div_negasit.innerHTML="<b>Nu exista produse conform filtrarii cerute.</b>";
+                var ps = document.getElementById("h2-produse");
+                ps.parentNode.insertBefore(div_negasit, ps.nextSibling);
+            }
     }
 
     document.getElementById("resetare").onclick=function(){
@@ -127,7 +223,12 @@ window.addEventListener("load", function(){
         document.getElementById("i_rad2").checked=false;
         document.getElementById("i_rad3").checked=false;
         document.getElementById("i_rad4").checked=false;
+        document.getElementById("exampleDataList").value="";
+        document.getElementById("inp-mistake").style.display="none"
+        document.getElementById("inp-negasit").style.display="none";
+        document.getElementById("inp-not-voucher").checked=false;
     }
+
 
     function sorteaza(semn){
         var produse=document.getElementsByClassName("produs");

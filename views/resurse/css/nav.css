@@ -47,6 +47,10 @@
 }
 
 
+.current {
+  color:red; 
+  border:1px solid red;
+}
 
 .fa-solid {
   display: inline-block;
