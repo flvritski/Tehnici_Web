@@ -31,6 +31,23 @@
     /* lower-greek, upper-roman */
   }
 
+
+  /* ----------------- */
+  /* hr */
+  hr::after{
+    content: ' ';
+    height: 50px;
+    background: url('../rsz_istockphoto-1298266863-170667a.jpg') no-repeat center;
+    position: relative;
+    display: block;
+  }
+
+  hr {
+    background-image: radial-gradient(transparent, transparent 20%, blue);
+    height: 10px;
+    background-size: 10px 10px;
+    overflow: visible;
+  }
   /* ----------------------- */
   /* --duotone-- */
   #duotone {

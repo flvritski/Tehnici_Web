@@ -55,12 +55,22 @@
         </div>
         <!-- <input type="checkbox" id="inp-voucher" name="Voucher" value="have">
         <label for="voucher"> Voucher</label><br> -->
+
+
         <div class="form-check" style="padding:24px;">
             <input class="form-check-input" type="checkbox" value="" id="inp-voucher">
             <label class="form-check-label" for="inp-voucher">
               Voucher
             </label>
         </div>
+
+        <!-- <div class="btn-group-toggle" data-toggle="buttons">
+            <label class="btn btn-secondary active">
+              <input type="checkbox" autocomplete="off" id="inp-voucher"> Voucher
+            </label>
+        </div> -->
+        
+
         <div class="form-check" style="padding:24px; display: none;">
             <input class="form-check-input" type="checkbox" value="" id="inp-not-voucher">
             <label class="form-check-label" for="inp-not-voucher">
@@ -174,11 +184,13 @@
         
         <p id="p-suma">Apăsați butonul pentru suma preturilor produselor afișate. </p>
         <button class="btn btn-warning" id="btn-suma">Total</button>
+
+        <h3 id="ultimul-produs"></h3>
+        
         <section id="produse">
             <h2 id="h2-produse">Produse</h2>
             <div class="grid-produse">
-                
-                <% for( let prod of locals.produse) { %>
+               <% for (let prod of locals.produse) { %>
                     <!-- <div class="col-sm-6" style="padding:10px;"> -->
                         <article class="produs" id="output2" >
                         <h3 class="nume">Nume: <a href="/produs/<%-prod.id %>" ><span class="val-nume"><%- prod.nume%></span></a></h3>
@@ -205,7 +217,7 @@
                         
                         <label class="selecteaza-cos">
                             Selectează:<br/>
-                            <input type="checkbox" class="select-cos" value="<%-prod.id %>" autocomplete="off">
+                            <input type="checkbox" id="linksNewWindow" class="select-cos" value="<%-prod.id %>" autocomplete="off" onChange="set_check()">
                         </label>
                     </article>
                     <% } %>

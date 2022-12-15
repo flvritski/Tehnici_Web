@@ -1,7 +1,11 @@
-
 window.addEventListener("load", function(){
     x=100
 
+    //cookies
+    cookie = document.cookie;
+    ultimulProdusAfisat = cookie.split("; ")[1].split("=")[1];
+    document.querySelector("#ultimul-produs").innerText="Id-ul produsului selectat = " + ultimulProdusAfisat;
+    
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
 
@@ -102,7 +106,13 @@ window.addEventListener("load", function(){
         var produse=document.getElementsByClassName("produs");
 
         counter = 0;
-        for (let produs of produse){
+        interval=1000;
+
+        produse.forEach(function(produs, index){
+            setTimeout(function () {
+                console.log(produs);
+              }, index * interval);
+        
             var cond1=false, cond2=false, cond3=false, cond4=false, cond5=false, cond6=false,cond7=false, cond8=false,cond9=false;
             
             produs.style.display="none";
@@ -142,59 +152,102 @@ window.addEventListener("load", function(){
             if(cond1 && cond2 ){
                 produs.style.display="block";
             }
+        })
+
+
+        // for (let produs of produse){
+        //     var cond1=false, cond2=false, cond3=false, cond4=false, cond5=false, cond6=false,cond7=false, cond8=false,cond9=false;
+            
+        //     produs.style.display="none";
+
+        //     let nume= produs.getElementsByClassName("val-nume")[0].innerHTML.toLowerCase().trim();
+        //     mistakes=0;
+            
+        //     if (inpNume.length !== 0) {
+        //     for (i=0;i<inpNume.length;i++){
+        //         if(inpNume[i]!==nume[i]){
+        //             mistakes++;
+        //             }
+        //         }
+        //         if (mistakes<=2){
+        //             inpNume = nume.toLowerCase().trim().split(" ")[0]
+        //         }
+        //     }   
+            
+        //     console.log(mistakes)
+
+        //     if(nume.includes(inpNume) && inpNume.length != 0){
+        //         cond1=true;
+        //     }
+        //     let categorie= produs.getElementsByClassName("val-categorie")[0].innerHTML;
+        //     if(inpCategorie=="toate" || categorie==inpCategorie){
+        //         cond2=true;
+        //     }
+        //     let garantie = produs.getElementsByClassName("val-garantie")[0].innerHTML;
+        //     if (values.includes(garantie)){
+        //         produs.style.display="block";
+        //     }
+
+        //     if (produs.getElementsByClassName("val-tip")[0].innerHTML === datalist_values ){
+        //         produs.style.display="block";
+        //     }
+
+        //     if(cond1 && cond2 ){
+        //         produs.style.display="block";
+        //     }
 
             
-            let gramaj = produs.getElementsByClassName("val-gramaj")[0].innerHTML;
-            if(document.getElementById("i_rad1").checked && parseInt(gramaj) <= val_superioara_rad1){
-                cond3=true;
-            }
-            if(document.getElementById("i_rad2").checked && parseInt(gramaj) >= val_inferioara_rad2 && parseInt(gramaj) <= val_superioara_rad2){
-                cond4=true;
-            }
-            if(document.getElementById("i_rad3").checked && parseInt(gramaj) >= val_inferioara_rad3){
-                cond5=true;
-            }
-            if(document.getElementById("i_rad4").checked && parseInt(gramaj) <= 25000){
-                cond6=true;
-            }
+        //     let gramaj = produs.getElementsByClassName("val-gramaj")[0].innerHTML;
+        //     if(document.getElementById("i_rad1").checked && parseInt(gramaj) <= val_superioara_rad1){
+        //         cond3=true;
+        //     }
+        //     if(document.getElementById("i_rad2").checked && parseInt(gramaj) >= val_inferioara_rad2 && parseInt(gramaj) <= val_superioara_rad2){
+        //         cond4=true;
+        //     }
+        //     if(document.getElementById("i_rad3").checked && parseInt(gramaj) >= val_inferioara_rad3){
+        //         cond5=true;
+        //     }
+        //     if(document.getElementById("i_rad4").checked && parseInt(gramaj) <= 25000){
+        //         cond6=true;
+        //     }
             
-            let pret = parseInt(produs.getElementsByClassName("val-pret")[0].innerHTML);
-            if(pret<=inpPret){
-                cond7=true;
-            }
-            if(document.getElementById("inp-voucher").checked===true && produs.getElementsByClassName("val-voucher")[0].innerHTML==="true"){
-                cond8=true;
-            }
+        //     let pret = parseInt(produs.getElementsByClassName("val-pret")[0].innerHTML);
+        //     if(pret<=inpPret){
+        //         cond7=true;
+        //     }
+        //     if(document.getElementById("inp-voucher").checked===true && produs.getElementsByClassName("val-voucher")[0].innerHTML==="true"){
+        //         cond8=true;
+        //     }
 
-            if(document.getElementById("inp-not-voucher").checked===true && produs.getElementsByClassName("val-voucher")[0].innerHTML==="false"){
-                cond9=true;
-            }
+        //     if(document.getElementById("inp-not-voucher").checked===true && produs.getElementsByClassName("val-voucher")[0].innerHTML==="false"){
+        //         cond9=true;
+        //     }
             
-            if(cond3 ){
-                produs.style.display="block";
-            }
-            if(cond4){
-                produs.style.display="block";
-            }
-            if(cond5){
-                produs.style.display="block";
-            }
-            if(cond6){
-                produs.style.display="block";
-            }
-            if(cond7){
-                produs.style.display="block";
-            }
-            if(cond8){
-                produs.style.display="block";
-            }
-            if(cond9){
-                produs.style.display="block";
-            }
+        //     if(cond3 ){
+        //         produs.style.display="block";
+        //     }
+        //     if(cond4){
+        //         produs.style.display="block";
+        //     }
+        //     if(cond5){
+        //         produs.style.display="block";
+        //     }
+        //     if(cond6){
+        //         produs.style.display="block";
+        //     }
+        //     if(cond7){
+        //         produs.style.display="block";
+        //     }
+        //     if(cond8){
+        //         produs.style.display="block";
+        //     }
+        //     if(cond9){
+        //         produs.style.display="block";
+        //     }
             
             
            
-        }
+        // }
            
             if(inpNume){
                 div_mistake.style.border = "1px solid purple";

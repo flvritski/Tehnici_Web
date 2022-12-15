@@ -99,3 +99,49 @@ input[type=radio]:checked{
 .form-select{
     font-size: medium;
 }
+
+#section_banner{
+    background: #33cccc;
+    color: white;
+    text-align: center;
+    padding: 60px 0;
+    width: 100%;
+    border-radius: 10px;
+}
+
+@keyframes animatebottom{
+    from{
+        bottom:-300px;
+        opacity:0
+    } 
+    to{
+        bottom:0;
+        opacity:1
+    }
+}
+
+@keyframes color-change{
+    0% {
+        color: black;
+    }
+    50%{
+        color: grey;
+    }
+    100%{
+        color: white;
+    }
+}
+
+@media screen and (min-width: 750px) {
+    #section_banner{
+        position:relative;
+        /* padding-top: 20px; */
+        animation:animatebottom 3s;
+    }
+    #section_banner h1{
+        animation: color-change 3s;
+    }
+    
+    
+}
+
