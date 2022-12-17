@@ -1,20 +1,18 @@
 window.addEventListener("DOMContentLoaded", function(){
     x=100
 
-    vectorProduse = document.getElementsByClassName("produs");
+   
 
-    // for(let prod of vectorProduse){
-    //     prod.style.display="none";
-    // } 
-    i=0;
+    vectorProduse = document.getElementsByClassName("produs");
+    ii=0;
     for(let prod of vectorProduse){
-        i++;
+        ii++;
         prod.style.display="none"
-        a = setInterval(function () {
+        var a = setTimeout(function () {
             prod.style.display="block";
-        }, i*1000)
+        }, ii*500)
     } 
-    
+
    
     
     //cookies
@@ -49,6 +47,7 @@ window.addEventListener("DOMContentLoaded", function(){
     }
 
     document.getElementById("filtrare").onclick=function(){
+
 
         condValidare = true;
         var inpNume=document.getElementById("inp-nume").value.toLowerCase().trim();
@@ -98,9 +97,8 @@ window.addEventListener("DOMContentLoaded", function(){
 
         
         i=0;
-        for (let produs of produse){
         
-            
+        for (let produs of produse){
             i++
             produs.style.display="none";
            
@@ -181,53 +179,49 @@ window.addEventListener("DOMContentLoaded", function(){
             ////////////////__________ARE____________//////////
             if(document.getElementById("are").checked===true && document.getElementById("cuv-cheie-1").checked === true
             && (produs.getElementsByClassName("val-culori")[0].innerHTML.toLowerCase().trim()) === (document.getElementById("cuv-cheie-1").value.toLowerCase())){
-                cond10=true;
                 produs.style.display="block"
             }
             
             if(document.getElementById("are").checked===true && document.getElementById("cuv-cheie-2").checked === true
             && (produs.getElementsByClassName("val-culori")[0].innerHTML.toLowerCase().trim()) === (document.getElementById("cuv-cheie-2").value.toLowerCase())){
-                cond11=true;
                 produs.style.display="block"
             }
             
             if(document.getElementById("are").checked===true && document.getElementById("cuv-cheie-3").checked === true
             && (produs.getElementsByClassName("val-culori")[0].innerHTML.toLowerCase().trim()) === (document.getElementById("cuv-cheie-3").value.toLowerCase())){
-                cond12=true;
                 produs.style.display="block";
             }
             if(document.getElementById("are").checked===true && document.getElementById("cuv-cheie-4").checked === true
             && (produs.getElementsByClassName("val-culori")[0].innerHTML.toLowerCase().trim()) === (document.getElementById("cuv-cheie-4").value.toLowerCase())){
-                cond13=true;
                 produs.style.display="block"
             }
 
         
             ////////////////__________NU_ARE____________//////////
-            // if(document.getElementById("nu-are").checked===true && document.getElementById("cuv-cheie-1").checked === true
-            // && (produs.getElementsByClassName("val-culori")[0].innerHTML.toLowerCase().trim()) === (document.getElementById("cuv-cheie-1").value.toLowerCase())){
-            //     produs.style.display="none";
-            //     cond10=true;
-            //     alert(cond10)
-            // }
-            // if(document.getElementById("nu-are").checked===true && document.getElementById("cuv-cheie-2").checked === true
-            // && (produs.getElementsByClassName("val-culori")[0].innerHTML.toLowerCase().trim()) === (document.getElementById("cuv-cheie-2").value.toLowerCase())){
-            //     produs.style.display="none"
-            //     cond11=true;
-            // }
-            // if(document.getElementById("nu-are").checked===true && document.getElementById("cuv-cheie-3").checked === true
-            // && (produs.getElementsByClassName("val-culori")[0].innerHTML.toLowerCase().trim()) === (document.getElementById("cuv-cheie-3").value.toLowerCase())){
-            //     produs.style.display="none";
-            //     cond12=true;
-            // }
-            
-            // if(document.getElementById("nu-are").checked===true && document.getElementById("cuv-cheie-4").checked === true
-            // && (produs.getElementsByClassName("val-culori")[0].innerHTML.toLowerCase().trim()) === (document.getElementById("cuv-cheie-4").value.toLowerCase())){
-            //     produs.style.display="none";
-            //     cond13=true;
-            // }
+            if(document.getElementById("nu-are").checked===true){
+                produs.style.display="block";
+                if(document.getElementById("cuv-cheie-1").checked === true
+                && (produs.getElementsByClassName("val-culori")[0].innerHTML.toLowerCase().trim()) === (document.getElementById("cuv-cheie-1").value.toLowerCase()))
+                {
+                    produs.style.display="none"
+                }
+                if(document.getElementById("cuv-cheie-2").checked === true
+                && (produs.getElementsByClassName("val-culori")[0].innerHTML.toLowerCase().trim()) === (document.getElementById("cuv-cheie-2").value.toLowerCase()))
+                {
+                    produs.style.display="none"
+                }
+                if(document.getElementById("cuv-cheie-3").checked === true
+                && (produs.getElementsByClassName("val-culori")[0].innerHTML.toLowerCase().trim()) === (document.getElementById("cuv-cheie-3").value.toLowerCase()))
+                {
+                    produs.style.display="none"
+                }
+                if(document.getElementById("cuv-cheie-4").checked === true
+                && (produs.getElementsByClassName("val-culori")[0].innerHTML.toLowerCase().trim()) === (document.getElementById("cuv-cheie-4").value.toLowerCase()))
+                {
+                    produs.style.display="none"
+                }
 
-           
+            }
             
             
             
@@ -354,7 +348,7 @@ window.addEventListener("DOMContentLoaded", function(){
             // setTimeout(function () {
             //     document.getElementById("rez").remove()
             // })
-        }
+            }
         }
     }
 
@@ -364,7 +358,7 @@ window.addEventListener("DOMContentLoaded", function(){
             let suma = 0
             for (let prod of produse){
                 if (prod.style.display != "none"){
-                    suma += parseFloat(prod.getElementsByClassName("val-pret")[0].innerHTML);
+                    suma += parseInt(prod.getElementsByClassName("val-pret")[0].innerHTML);
                 }
             }
             if(!document.getElementById("rez")){
@@ -374,13 +368,13 @@ window.addEventListener("DOMContentLoaded", function(){
                 var ps = document.getElementById("p-suma");
                 ps.parentNode.insertBefore(rezultat, ps.nextSibling);
                 rezultat.style.border = "1px solid purple";
-                rezultat.style.position = "fixed";
+                rezultat.style.position = "relative";
                 rezultat.onclick = function(){
                     this.remove();
                 }
                 setTimeout(function () {
                     document.getElementById("rez").remove()
-                }, 2000);
+                }, 10000);
         }
 
     }
