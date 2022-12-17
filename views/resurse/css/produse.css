@@ -107,6 +107,7 @@ input[type=radio]:checked{
     padding: 60px 0;
     width: 100%;
     border-radius: 10px;
+    position: fixed;
 }
 
 @keyframes animatebottom{
@@ -142,6 +143,13 @@ input[type=radio]:checked{
         animation: color-change 3s;
     }
     
-    
 }
+
+@media screen and (max-width: 750px){
+    span.btn-span{
+        display: none;
+    }
+}
+
+ 
 

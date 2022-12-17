@@ -2,6 +2,8 @@
 <html  lang="ro">
     <%- include("../fragmente/head.ejs") %>
     <script type="text/javascript" src="../resurse/js/produse.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+
     <body>
     <%- include("../fragmente/header.ejs") %>
 
@@ -9,7 +11,7 @@
         <div class="row" style="padding-top: 25px;">
         <div class="col-md-3">
             <div class="form-floating mb-3">
-                <input type="email" class="form-control" id="inp-nume" placeholder="Harley">
+                <input type="name" class="form-control" id="inp-nume" placeholder="Harley">
                 <label for="inp-nume">Nume</label>
               </div>
             </div>
@@ -79,48 +81,42 @@
         </div>
         <div class="row" style="padding: 24px;">
             <div class="col-sm-6">
-        <div class="form-check">
-            <input class="form-check-input" type="radio" value="0:<%- locals.val4 %>" name="flexRadioDefault" id="are">
-            <label class="form-check-label" for="are">
-              Are
-            </label>
-        </div>
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" value="0:<%- locals.val4 %>" name="flexRadioDefault" id="nu-are">
-            <label class="form-check-label" for="nu-are">
-              N-are
-            </label>
-            </div>
+                <div class="switch-field">
+                    <input type="radio" id="are" name="switch-one" value="yes" checked/>
+                    <label for="are"><i class="bi bi-check2"></i><span class=btn-span">Are</span></label>
+                    <input type="radio" id="nu-are" name="switch-one" value="no" />
+                    <label for="nu-are"><i class="bi bi-check2"></i><span class="btn-span">Nu Are</span></label>
+                  </div>
             </div>
             <div class="col-sm-6">
                 <div class="form-check form-check-inline" style="padding:24px;">
-                    <input class="form-check-input" type="checkbox" value="" id="cuv-cheie-1">
+                    <input class="form-check-input" type="checkbox" value="black,orange" id="cuv-cheie-1">
                     <label class="form-check-label" for="cuv-cheie-1">
-                      Harley
+                        black,orange
                     </label>
                 </div>
                 <div class="form-check form-check-inline" style="padding:24px;">
-                    <input class="form-check-input" type="checkbox" value="" id="cuv-cheie-2">
+                    <input class="form-check-input" type="checkbox" value="black,matte" id="cuv-cheie-2">
                     <label class="form-check-label" for="cuv-cheie-2">
-                      Startone
+                      black,matte
                     </label>
                 </div>
                 <div class="form-check form-check-inline" style="padding:24px;">
-                    <input class="form-check-input" type="checkbox" value="" id="cuv-cheie-3">
+                    <input class="form-check-input" type="checkbox" value="purple,matte" id="cuv-cheie-3">
                     <label class="form-check-label" for="cuv-cheie-3">
-                      Millenium
+                      purple,matte
                     </label>
                 </div>
                 <div class="form-check form-check-inline" style="padding:24px;">
-                    <input class="form-check-input" type="checkbox" value="" id="cuv-cheie-4">
+                    <input class="form-check-input" type="checkbox" value="black,silver" id="cuv-cheie-4">
                     <label class="form-check-label" for="cuv-cheie-4">
-                      Kawai
+                      black,silver
                     </label>
                 </div>
             </div>
         </div>
         </div>
-
+       
 
         <label> Pret maxim: <input class="form-range" type="range" id="inp-pret" value="0" min="0"  max="15000"> <span id="infoRange">(0)</span></label>
         <div class="row">
@@ -167,14 +163,14 @@
         
         <div class="row">
             <div class="col-sm">
-                <button class="btn btn-light" id="filtrare">Filtreaza</button> 
-                <button class="btn btn-danger" id="resetare">Reseteaza</button>
+                <button class="btn btn-light" id="filtrare"><i class="bi bi-arrow-clockwise"></i><span class="btn-span">Filtreaza</span></button> 
+                <button class="btn btn-danger" id="resetare"><i class="bi bi-arrow-repeat"></i><span class="btn-span">Reseteaza</span></button>
             </div>
             <div class="col-sm-2">
-                <button class="btn btn-success" id="sortCrescNume">Sorteaza crescator dupa pret si nume</button>
+                <button class="btn btn-primary" id="sortCrescNume"><span class="btn-span">Sorteaza crescator dupa pret si nume</span><i class="bi bi-arrow-up"></i></button>
             </div>
             <div class="col-sm-2">
-                <button class="btn btn-success" id="sortDescrescNume">Sorteaza descrescator dupa pret si nume</button>
+                <button class="btn btn-primary" id="sortDescrescNume"><span class="btn-span">Sorteaza descrescator dupa pret si nume</span><i class="bi bi-arrow-down"></i></button>
             </div>
         </div>
 
@@ -186,13 +182,14 @@
         <button class="btn btn-warning" id="btn-suma">Total</button>
 
         <h3 id="ultimul-produs"></h3>
-        
+
         <section id="produse">
             <h2 id="h2-produse">Produse</h2>
             <div class="grid-produse">
                <% for (let prod of locals.produse) { %>
+                
                     <!-- <div class="col-sm-6" style="padding:10px;"> -->
-                        <article class="produs" id="output2" >
+                        <article class="produs" id="output2"  >
                         <h3 class="nume">Nume: <a href="/produs/<%-prod.id %>" ><span class="val-nume"><%- prod.nume%></span></a></h3>
                         <div class="row info-prod">
                             <div class="col-sm-6">

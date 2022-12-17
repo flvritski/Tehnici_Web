@@ -1,10 +1,31 @@
-window.addEventListener("load", function(){
+window.addEventListener("DOMContentLoaded", function(){
     x=100
 
+    vectorProduse = document.getElementsByClassName("produs");
+
+    // for(let prod of vectorProduse){
+    //     prod.style.display="none";
+    // } 
+    i=0;
+    for(let prod of vectorProduse){
+        i++;
+        prod.style.display="none"
+        a = setInterval(function () {
+            prod.style.display="block";
+        }, i*1000)
+    } 
+    
+   
+    
     //cookies
+    try{
     cookie = document.cookie;
     ultimulProdusAfisat = cookie.split("; ")[1].split("=")[1];
     document.querySelector("#ultimul-produs").innerText="Id-ul produsului selectat = " + ultimulProdusAfisat;
+    }
+    catch(e) {
+        console.log(e);
+    }
     
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
@@ -26,55 +47,20 @@ window.addEventListener("load", function(){
 
         
     }
-    
-    const delayLoop = (fn, delay) => {
-        return (x, i) => {
-          setTimeout(() => {
-            fn(x);
-          }, i * delay);
-        };
-      };
-      
-      const names = [
-        "Alberta",
-        "Barry",
-        "Charley",
-        "Christopher",
-        "Dianne",
-        "Ellen",
-        "Ethel",
-        "James",
-        "Jodee",
-        "Joseph",
-        "Lilia",
-        "Mark",
-        "Mary",
-        "Merri",
-        "Michael",
-        "Mildred",
-        "Randall",
-        "Roy",
-        "Thomas",
-        "Venus"
-      ];
-      
-      const output = document.querySelector("#output");
-      
-      const display = s => output.innerText = s;
-      
-      // names.forEach(display);
-      names.forEach(delayLoop(display, 1000));
-
-
 
     document.getElementById("filtrare").onclick=function(){
+
         condValidare = true;
         var inpNume=document.getElementById("inp-nume").value.toLowerCase().trim();
         condValidare = condValidare && inpNume.match(new RegExp("^[a-zA-Z]*$"))
         if (!condValidare){
             alert("Inputuri gresite!");
+            document.querySelector("#inp-nume").className = "form-control is-invalid"
             return;
-        }
+        } else {
+            document.querySelector("#inp-nume").className = "form-control"
+
+        }   
         greseli_permise = 2;
         var inpCategorie=document.getElementById("inp-categorie").value;
         //select multiplu
@@ -102,20 +88,30 @@ window.addEventListener("load", function(){
         //voucher
         var inpVoucher = document.getElementById("inp-voucher").value;
 
+        //are sau nu_are
 
         var produse=document.getElementsByClassName("produs");
 
-        counter = 0;
         interval=1000;
+        counter = 0;
+       
 
-        produse.forEach(function(produs, index){
-            setTimeout(function () {
-                console.log(produs);
-              }, index * interval);
         
-            var cond1=false, cond2=false, cond3=false, cond4=false, cond5=false, cond6=false,cond7=false, cond8=false,cond9=false;
+        i=0;
+        for (let produs of produse){
+        
             
+            i++
             produs.style.display="none";
+           
+
+            var cond1=false, cond2=false, cond3=false, cond4=false, 
+            cond5=false, cond6=false,
+            cond7=false, cond8=false,cond9=false,
+            cond10=false, cond11=false, cond12=false, cond13=false;
+
+            
+            // produs.style.display="none";
 
             let nume= produs.getElementsByClassName("val-nume")[0].innerHTML.toLowerCase().trim();
             mistakes=0;
@@ -152,111 +148,130 @@ window.addEventListener("load", function(){
             if(cond1 && cond2 ){
                 produs.style.display="block";
             }
-        })
-
-
-        // for (let produs of produse){
-        //     var cond1=false, cond2=false, cond3=false, cond4=false, cond5=false, cond6=false,cond7=false, cond8=false,cond9=false;
-            
-        //     produs.style.display="none";
-
-        //     let nume= produs.getElementsByClassName("val-nume")[0].innerHTML.toLowerCase().trim();
-        //     mistakes=0;
-            
-        //     if (inpNume.length !== 0) {
-        //     for (i=0;i<inpNume.length;i++){
-        //         if(inpNume[i]!==nume[i]){
-        //             mistakes++;
-        //             }
-        //         }
-        //         if (mistakes<=2){
-        //             inpNume = nume.toLowerCase().trim().split(" ")[0]
-        //         }
-        //     }   
-            
-        //     console.log(mistakes)
-
-        //     if(nume.includes(inpNume) && inpNume.length != 0){
-        //         cond1=true;
-        //     }
-        //     let categorie= produs.getElementsByClassName("val-categorie")[0].innerHTML;
-        //     if(inpCategorie=="toate" || categorie==inpCategorie){
-        //         cond2=true;
-        //     }
-        //     let garantie = produs.getElementsByClassName("val-garantie")[0].innerHTML;
-        //     if (values.includes(garantie)){
-        //         produs.style.display="block";
-        //     }
-
-        //     if (produs.getElementsByClassName("val-tip")[0].innerHTML === datalist_values ){
-        //         produs.style.display="block";
-        //     }
-
-        //     if(cond1 && cond2 ){
-        //         produs.style.display="block";
-        //     }
 
             
-        //     let gramaj = produs.getElementsByClassName("val-gramaj")[0].innerHTML;
-        //     if(document.getElementById("i_rad1").checked && parseInt(gramaj) <= val_superioara_rad1){
-        //         cond3=true;
-        //     }
-        //     if(document.getElementById("i_rad2").checked && parseInt(gramaj) >= val_inferioara_rad2 && parseInt(gramaj) <= val_superioara_rad2){
-        //         cond4=true;
-        //     }
-        //     if(document.getElementById("i_rad3").checked && parseInt(gramaj) >= val_inferioara_rad3){
-        //         cond5=true;
-        //     }
-        //     if(document.getElementById("i_rad4").checked && parseInt(gramaj) <= 25000){
-        //         cond6=true;
-        //     }
-            
-        //     let pret = parseInt(produs.getElementsByClassName("val-pret")[0].innerHTML);
-        //     if(pret<=inpPret){
-        //         cond7=true;
-        //     }
-        //     if(document.getElementById("inp-voucher").checked===true && produs.getElementsByClassName("val-voucher")[0].innerHTML==="true"){
-        //         cond8=true;
-        //     }
-
-        //     if(document.getElementById("inp-not-voucher").checked===true && produs.getElementsByClassName("val-voucher")[0].innerHTML==="false"){
-        //         cond9=true;
-        //     }
-            
-        //     if(cond3 ){
-        //         produs.style.display="block";
-        //     }
-        //     if(cond4){
-        //         produs.style.display="block";
-        //     }
-        //     if(cond5){
-        //         produs.style.display="block";
-        //     }
-        //     if(cond6){
-        //         produs.style.display="block";
-        //     }
-        //     if(cond7){
-        //         produs.style.display="block";
-        //     }
-        //     if(cond8){
-        //         produs.style.display="block";
-        //     }
-        //     if(cond9){
-        //         produs.style.display="block";
-        //     }
-            
-            
-           
-        // }
-           
-            if(inpNume){
-                div_mistake.style.border = "1px solid purple";
-                div_negasit = document.createElement("div");
-                div_negasit.id = "inp-negasit"
-                div_negasit.innerHTML="<b>Nu exista produse conform filtrarii cerute.</b>";
-                var ps = document.getElementById("h2-produse");
-                ps.parentNode.insertBefore(div_negasit, ps.nextSibling);
+            let gramaj = produs.getElementsByClassName("val-gramaj")[0].innerHTML;
+            if(document.getElementById("i_rad1").checked && parseInt(gramaj) <= val_superioara_rad1){
+                cond3=true;
             }
+            if(document.getElementById("i_rad2").checked && parseInt(gramaj) >= val_inferioara_rad2 && parseInt(gramaj) <= val_superioara_rad2){
+                cond4=true;
+            }
+            if(document.getElementById("i_rad3").checked && parseInt(gramaj) >= val_inferioara_rad3){
+                cond5=true;
+            }
+            if(document.getElementById("i_rad4").checked && parseInt(gramaj) <= 25000){
+                cond6=true;
+            }
+            
+            let pret = parseInt(produs.getElementsByClassName("val-pret")[0].innerHTML);
+            if(pret<=inpPret){
+                cond7=true;
+            }
+            if(document.getElementById("inp-voucher").checked===true && produs.getElementsByClassName("val-voucher")[0].innerHTML==="true"){
+                cond8=true;
+            }
+
+            if(document.getElementById("inp-not-voucher").checked===true && produs.getElementsByClassName("val-voucher")[0].innerHTML==="false"){
+                cond9=true;
+            }
+
+            /////////GRUP RADIO BUTTON CU ARE/NU ARE
+
+            ////////////////__________ARE____________//////////
+            if(document.getElementById("are").checked===true && document.getElementById("cuv-cheie-1").checked === true
+            && (produs.getElementsByClassName("val-culori")[0].innerHTML.toLowerCase().trim()) === (document.getElementById("cuv-cheie-1").value.toLowerCase())){
+                cond10=true;
+                produs.style.display="block"
+            }
+            
+            if(document.getElementById("are").checked===true && document.getElementById("cuv-cheie-2").checked === true
+            && (produs.getElementsByClassName("val-culori")[0].innerHTML.toLowerCase().trim()) === (document.getElementById("cuv-cheie-2").value.toLowerCase())){
+                cond11=true;
+                produs.style.display="block"
+            }
+            
+            if(document.getElementById("are").checked===true && document.getElementById("cuv-cheie-3").checked === true
+            && (produs.getElementsByClassName("val-culori")[0].innerHTML.toLowerCase().trim()) === (document.getElementById("cuv-cheie-3").value.toLowerCase())){
+                cond12=true;
+                produs.style.display="block";
+            }
+            if(document.getElementById("are").checked===true && document.getElementById("cuv-cheie-4").checked === true
+            && (produs.getElementsByClassName("val-culori")[0].innerHTML.toLowerCase().trim()) === (document.getElementById("cuv-cheie-4").value.toLowerCase())){
+                cond13=true;
+                produs.style.display="block"
+            }
+
+        
+            ////////////////__________NU_ARE____________//////////
+            // if(document.getElementById("nu-are").checked===true && document.getElementById("cuv-cheie-1").checked === true
+            // && (produs.getElementsByClassName("val-culori")[0].innerHTML.toLowerCase().trim()) === (document.getElementById("cuv-cheie-1").value.toLowerCase())){
+            //     produs.style.display="none";
+            //     cond10=true;
+            //     alert(cond10)
+            // }
+            // if(document.getElementById("nu-are").checked===true && document.getElementById("cuv-cheie-2").checked === true
+            // && (produs.getElementsByClassName("val-culori")[0].innerHTML.toLowerCase().trim()) === (document.getElementById("cuv-cheie-2").value.toLowerCase())){
+            //     produs.style.display="none"
+            //     cond11=true;
+            // }
+            // if(document.getElementById("nu-are").checked===true && document.getElementById("cuv-cheie-3").checked === true
+            // && (produs.getElementsByClassName("val-culori")[0].innerHTML.toLowerCase().trim()) === (document.getElementById("cuv-cheie-3").value.toLowerCase())){
+            //     produs.style.display="none";
+            //     cond12=true;
+            // }
+            
+            // if(document.getElementById("nu-are").checked===true && document.getElementById("cuv-cheie-4").checked === true
+            // && (produs.getElementsByClassName("val-culori")[0].innerHTML.toLowerCase().trim()) === (document.getElementById("cuv-cheie-4").value.toLowerCase())){
+            //     produs.style.display="none";
+            //     cond13=true;
+            // }
+
+           
+            
+            
+            
+
+           
+            
+            if(cond3 ){
+                produs.style.display="block";
+            }
+            if(cond4){
+                produs.style.display="block";
+            }
+            if(cond5){
+                produs.style.display="block";
+            }
+            if(cond6){
+                produs.style.display="block";
+            }
+            if(cond7){
+                produs.style.display="block";
+            }
+            if(cond8){
+                produs.style.display="block";
+            }
+            if(cond9){
+                produs.style.display="block";
+            }
+            
+            if(produs.style.display=="none"){
+                counter++;
+                }
+            
+            
+        }
+
+        
+        if(counter==produse.length){
+            // div_mistake.style.border = "1px solid purple";
+            div_negasit = document.createElement("div");
+            div_negasit.id = "inp-negasit"
+            div_negasit.innerHTML="<b>Nu exista produse conform filtrarii cerute.</b>";
+            var ps = document.getElementById("h2-produse");
+            ps.parentNode.insertBefore(div_negasit, ps.nextSibling);
+        }
     }
 
     document.getElementById("resetare").onclick=function(){
@@ -277,9 +292,16 @@ window.addEventListener("load", function(){
         document.getElementById("i_rad3").checked=false;
         document.getElementById("i_rad4").checked=false;
         document.getElementById("exampleDataList").value="";
-        document.getElementById("inp-mistake").style.display="none"
-        document.getElementById("inp-negasit").style.display="none";
+        try {
+            document.getElementById("inp-negasit").style.display="none";
+        } catch(e) {
+            console.log(e)
+        }
         document.getElementById("inp-not-voucher").checked=false;
+        document.getElementById("cuv-cheie-1").checked=false;
+        document.getElementById("cuv-cheie-2").checked=false;
+        document.getElementById("cuv-cheie-3").checked=false;
+        document.getElementById("cuv-cheie-4").checked=false;
     }
 
 

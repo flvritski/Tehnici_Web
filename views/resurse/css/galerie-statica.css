@@ -40,6 +40,7 @@
     background: url('../rsz_istockphoto-1298266863-170667a.jpg') no-repeat center;
     position: relative;
     display: block;
+    top: -10px;
   }
 
   hr {

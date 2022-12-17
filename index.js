@@ -3,6 +3,7 @@ const ejs = require('ejs');
 const sass = require('sass');
 const {Client} = require('pg');
 const {Utilizator} = require('./module_proprii/utilizator.js')
+const AccesBD = require("./module_proprii/accesbd.js")
 
 var ip = require('ip');
 const fs=require("fs");
@@ -12,13 +13,21 @@ var cssBootstrap = sass.compile(__dirname + "/views/resurse/scss/customizare-boo
 fs.writeFileSync(__dirname + "/views/resurse/css/biblioteci/customizare-bootstrap.css", cssBootstrap.css);
 const sharp = require('sharp');
 
-var client = new Client({database: "florinstefan",
-  user: "florinstefan",
-  password: "1234",
-  host: "localhost",
-  port: 5432
-});
-client.connect();
+// var client = new Client({database: "florinstefan",
+//   user: "florinstefan",
+//   password: "1234",
+//   host: "localhost",
+//   port: 5432
+// });
+// client.connect();
+var instantaBD = AccesBD.getInstanta({init:"local"});
+var client = instantaBD.getClient();
+instantaBD.select({campuri: ["nume", "pret"], tabel: "instrumente", conditiiAnd: ["pret>10", "pret<1000"]}, function(err,rez){
+  if(err)
+  console.log(err)
+  else
+    console.log(rez)
+})
 
 
 
@@ -190,8 +199,13 @@ app.post("/inregistrare",function(req, res){
 
       var utilizatorNou = new Utilizator();
       try{
-        utilizatorNou.setareNume(campuriText.nume);
-        utilizatorNou.setareUsername(campuriText.username)
+        utilizatorNou.setareNume = campuriText.nume
+        utilizatorNou.setareUsername = campuriText.username
+        utilizatorNou.email = campuriText.email
+        utilizatorNou.prenume = campuriText.prenume
+        utilizatorNou.parola = campuriText.parola
+        utilizatorNou.culoare_chat = campuriText.culoare_chat
+        utilizatorNou.salvareUtilizator();
       }
       catch(e) {
         eroare += e.message
