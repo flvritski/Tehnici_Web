@@ -222,6 +222,12 @@ window.addEventListener("DOMContentLoaded", function(){
                 }
 
             }
+
+            if (document.getElementById("quantity").value != '' ){
+                if(garantie==parseInt(document.getElementById("quantity").value)){
+                    produs.style.display="block"
+                }
+            }
             
             
             
@@ -378,4 +384,147 @@ window.addEventListener("DOMContentLoaded", function(){
         }
 
     }
+
+
+    /////////////ONCHANGE
+
+    document.getElementById("quantity").onkeydown=document.getElementById("quantity").onchange=function(){
+        var produse=document.getElementsByClassName("produs");
+        for (let produs of produse){
+            produs.style.display="none";
+            let garantie = produs.getElementsByClassName("val-garantie")[0].innerHTML;
+            if (document.getElementById("quantity").value != '' ){
+                if(garantie==parseInt(document.getElementById("quantity").value)){
+                    produs.style.display="block"
+                }
+            }
+        }
+    }
+
+    document.getElementById("inp-garantie").onchange=function(){
+        var selected = document.querySelectorAll('#inp-garantie option:checked');
+        var values = Array.from(selected).map(el => el.value);
+        var produse=document.getElementsByClassName("produs");
+
+        for (let produs of produse){
+            produs.style.display="none"
+        let garantie = produs.getElementsByClassName("val-garantie")[0].innerHTML;
+            if (values.includes(garantie)){
+                produs.style.display="block";
+            }
+        }
+    }
+
+    document.getElementById("inp-voucher").onchange=function(){
+        var produse=document.getElementsByClassName("produs");
+        for (let produs of produse){
+            produs.style.display="none"
+            if(document.getElementById("inp-voucher").checked===true && produs.getElementsByClassName("val-voucher")[0].innerHTML==="true"){
+                produs.style.display="block";
+            }
+        }
+    }
+
+    document.getElementById("i_rad1").onchange=function(){
+        var produse=document.getElementsByClassName("produs");
+        var val_superioara_rad1 = parseInt(document.getElementById("i_rad1").value.replace('0:', ''));
+        for (let produs of produse){
+            produs.style.display="none"
+            let gramaj = produs.getElementsByClassName("val-gramaj")[0].innerHTML;
+
+            if(document.getElementById("i_rad1").checked && parseInt(gramaj) < val_superioara_rad1){
+                produs.style.display="block"
+            }
+        }
+    }
+
+    document.getElementById("i_rad2").onchange=function(){
+        var produse=document.getElementsByClassName("produs");
+        var inpRad2 = document.getElementById("i_rad2").value;
+        var val_inferioara_rad2 = inpRad2.split(":")[0];
+        var val_superioara_rad2 = inpRad2.split(":")[1];
+
+        for (let produs of produse){
+            produs.style.display="none"
+            let gramaj = produs.getElementsByClassName("val-gramaj")[0].innerHTML;
+            if(document.getElementById("i_rad2").checked && parseInt(gramaj) >= val_inferioara_rad2 && parseInt(gramaj) <= val_superioara_rad2){
+                produs.style.display="block"
+            }
+        }
+    }
+
+    document.getElementById("i_rad3").onchange=function(){
+        var produse=document.getElementsByClassName("produs");
+        var inpRad3 = document.getElementById("i_rad3").value;
+        var val_inferioara_rad3 = parseInt(inpRad3.split(":")[0]);
+        for (let produs of produse){
+            produs.style.display="none"
+            let gramaj = produs.getElementsByClassName("val-gramaj")[0].innerHTML;
+
+            if(document.getElementById("i_rad3").checked && parseInt(gramaj) >= val_inferioara_rad3){
+                produs.style.display="block"
+            }
+        }
+    }
+
+    
+    document.getElementById("exampleDataList").onkeydown=document.getElementById("exampleDataList").onchange=function(){
+        document.getElementById("exampleDataList").value;
+        datalist_values = document.getElementById("exampleDataList").value;
+        var produse=document.getElementsByClassName("produs");
+        for (let produs of produse){
+            produs.style.display="none"
+            if (produs.getElementsByClassName("val-tip")[0].innerHTML === datalist_values ){
+                produs.style.display="block";
+            }
+        }
+    }
+
+    document.getElementById("inp-categorie").onchange=function(){
+        var produse=document.getElementsByClassName("produs");
+        for (let produs of produse){
+            produs.style.display="none"
+            let categorie= produs.getElementsByClassName("val-categorie")[0].innerHTML;
+
+            if(categorie==document.getElementById("inp-categorie").value){
+                produs.style.display="block"
+            }
+        }
+    }
+
+    document.getElementById("inp-pret").onchange=function(){
+        document.getElementById("infoRange").innerHTML = `(${this.value})`
+        inpPret=parseInt(document.getElementById("inp-pret").value);
+        var produse = document.getElementsByClassName("produs");
+        for (let produs of produse){
+            produs.style.display="none"
+            let pret = parseInt(produs.getElementsByClassName("val-pret")[0].innerHTML);
+                if(pret<=inpPret){
+                    produs.style.display="block"
+                }
+        }
+    }
+
+    document.getElementById("inp-nume").onkeydown=document.getElementById("inp-nume").onchange=function(){
+        condValidare = true;
+        inpNume = document.getElementById("inp-nume").value.toLowerCase().trim();
+        condValidare = condValidare && inpNume.match(new RegExp("^[a-zA-Z]*$"))
+        if (!condValidare){
+            alert("Inputuri gresite!");
+            document.querySelector("#inp-nume").className = "form-control is-invalid"
+            return;
+        } else {
+            document.querySelector("#inp-nume").className = "form-control"
+
+        } 
+        var produse = document.getElementsByClassName("produs");
+        for(let produs of produse){
+            produs.style.display="none"
+            let nume= produs.getElementsByClassName("val-nume")[0].innerHTML.toLowerCase().trim();
+            if(nume.includes(inpNume) && inpNume.length != 0){
+                produs.style.display="block"
+            }
+        }
+    }
+
 })

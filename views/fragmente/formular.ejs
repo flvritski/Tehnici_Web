@@ -6,12 +6,12 @@
     </p>
     <p>
         <label>
-            Nume: <input type="text" name="nume" id="inp-nume"  value="Gogulescu" >
+            Nume: <input type="text" name="nume" id="inp-nume"  required value="Gogulescu" >
         </label>
     </p>
     <p>
         <label>
-            Prenume: <input type="text" name="prenume" id="inp-prenume" value="Gogu"  >
+            Prenume: <input type="text" name="prenume" id="inp-prenume" required value="Gogu"  >
         </label>
     </p>
     <p>
@@ -26,13 +26,28 @@
     </p>
     <p>
         <label>
-            Email: <input type="text" name="email" id="inp-email" required value="profprofprof007@gmail.com"  size="50">
+            Email: <input type="text" name="email" id="inp-email" required value="ehomerecords@gmail.com"  size="50">
+        </label>
+    </p>
+    <p>
+        <label>
+            Data Nasterii: <input type="date" name="data_nasterii" id="inp-nastere"  size="50">
         </label>
     </p>
     <p>
         <label>
             Culoare text chat: <select name="culoare_chat" id="sel-culoare"><option value="red" selected>rosu</option><option value="green">verde</option><option value="blue">albastru</option></select>
         </label>
+    </p>
+    <p>
+        <label for="ocupatie">Ocupatie:</label>
+            <select name="ocupatie" id="ocupatie" multiple>
+                <option value="N/A" selected>Nu doresc sa spun</option>    
+                <option value="elev">Elev</option>
+                <option value="student">Student</option>
+                <option value="Muzician/Compozitor">Muzician/Compozitor</option>
+                <option value="DJ">DJ</option>
+            </select>
     </p>
     <p>
         <label>

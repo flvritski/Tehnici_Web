@@ -35,6 +35,13 @@
             "titlu":"Eroare baza date",
             "text": "Reveniti mai tarziu!",
             "imagine":"404.png"
+        },
+        {
+            "identificator":3,
+            "status":false,
+            "titlu":"Date gresite",
+            "text": "Verificati datele!",
+            "imagine":"404.png"
         }
     ]
 }

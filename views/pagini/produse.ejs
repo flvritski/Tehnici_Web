@@ -118,7 +118,7 @@
         </div>
        
 
-        <label> Pret maxim: <input class="form-range" type="range" id="inp-pret" value="0" min="0"  max="15000"> <span id="infoRange">(0)</span></label>
+        <label> Pret maxim: <%- locals.pret_limita_superioara %> <input class="form-range" type="range" id="inp-pret" value="0" min="0"  max="<%- locals.pret_limita_superioara %>"> <span id="infoRange">(0)</span></label>
         <div class="row">
             <div class="col-md-3">
         <label style="font-size: large;">Select simplu
@@ -129,6 +129,12 @@
             <% } %>
           </select>
           </label>
+          </div>
+          <div class="col-md-3">
+            <div class="form-outline">
+                <input type="number" id="quantity" class="form-control" min="<%- locals.garantie_limita_inferioara %>" max="<%- locals.garantie_limita_superioara %>"/>
+                <label class="form-label" for="quantity">Garantie (intre 1 si 3)</label>
+            </div>
           </div>
           <div class="col-md-3">
           <label class="form-label select-label">Garantie ( Multiplu select ):

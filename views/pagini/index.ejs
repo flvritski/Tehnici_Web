@@ -171,7 +171,7 @@
                 <p style="border: 2px solid black;">Lorem ipsum</p>
                 <section id="sectiune-galerie-animata" style="padding-top: 10px;">
                     <div id="galerie-animata" class="galerie-a">
-                        <% for(let imag of locals.imagini_random){ %> 
+                        <% for(let imag in locals.imagini_random){ %> 
                             <figure>
                                     <img src="<%- imag.fisier %>" alt="briose">
                             <figcaption><%- imag.descriere %></figcaption>
@@ -181,6 +181,25 @@
                 </section>
                 
                 <p style="border: 2px solid black;">Lorem ipsum <%- locals.ip %></p>
+                <% if(!locals.utilizator) { %>
+                    <form id="form_inreg"  method="post" class="date"  action="/login"  enctype="multipart/form-data">
+                        <p>
+                            <label>
+                                Username: <input type="text" name="username" id="inp-username" value="" required pattern="[A-Za-z0-9]+">
+                            </label>
+                        </p>
+                        <p>
+                            <label>
+                                Parola: <input id="parl" type="password" required  name="parola" value="">
+                            </label>
+                        </p>
+                        <p><input type="submit" value="Logare"></p>
+                    </form>
+                    <p><%- locals.eroareLogin %></p>
+                    <% } else {%>
+                       <%- locals.succesLogin %>
+                    <% }  %>
+    
             </div>
             <section>
                 <hr></hr>
@@ -338,7 +357,7 @@
                 <section id="galerie-statica">
                     <h2>Galerie</h2>
                     <div id="grid-galerie">
-                        <% for(let imag of locals.imagini){ 
+                        <% for(let imag of locals.imagini){
                             var d = new Date();  
                             var vector_anotimpuri = ["toamna", "iarna", "primavara", "vara"];
                             var vector_luni = ["ianuarie", "februarie", "martie", "aprilie", "mai", "iunie", "iulie", "august", "septembrie", "octombrie", "noiembrie", "decembrie"];
@@ -372,19 +391,8 @@
                     <% } %>
                     </div>
                     </section>
-
-                    <!-- ---------------------------- -->
-                    <!-- <div id="grid-galerie">
-                        <% for(let imag of locals.imagini){ %> 
-                        <figure>
-                            <picture>
-                                <source srcset="<%- imag.fisier_mediu %>" media="(max-width: 1000px)"/>
-                                <img src="<%- imag.fisier %>" alt="briose">
-                            </picture>
-                        <figcaption><%- imag.descriere %></figcaption>
-                        </figure>
-                    <% } %> 
-                    </div> -->
+                
+                   
 
                     <h1 id="h1selection" style="margin-top: 5%; text-align: center;">The column-count Property</h1>
 

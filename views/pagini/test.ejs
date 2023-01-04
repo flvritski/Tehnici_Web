@@ -1,0 +1,50 @@
+<section id="sectiune-galerie-animata" style="padding-top: 10px;">
+    <div id="galerie-animata" class="galerie-a">
+        <% for(let imag of locals.imagini_random){ %> 
+            <figure>
+                    <img src="<%- imag.fisier %>" alt="briose">
+            <figcaption><%- imag.descriere %></figcaption>
+            </figure>
+        <% } %> 
+    </div>
+</section>
+
+
+
+<section id="galerie-statica">
+    <h2>Galerie</h2>
+    <div id="grid-galerie">
+        <% for(let imag of locals.imagini){ 
+            var d = new Date();  
+            var vector_anotimpuri = ["toamna", "iarna", "primavara", "vara"];
+            var vector_luni = ["ianuarie", "februarie", "martie", "aprilie", "mai", "iunie", "iulie", "august", "septembrie", "octombrie", "noiembrie", "decembrie"];
+            var luna_r = vector_luni[d.getMonth()];
+            const toamna = ["septembrie","octombrie", "noiembrie"];
+            const iarna = ["decembrie", "ianuarie", "februarie"];
+            const primavara = ["martie", "aprilie", "mai"];
+            const vara = ["iunie", "iulie", "august"];
+            var test;
+            if (toamna.includes(luna_r)){
+              test = vector_anotimpuri[0];
+            }
+            if (iarna.includes(luna_r)){
+              test = vector_anotimpuri[1];
+            }
+            if (primavara.includes(luna_r)){
+              test = vector_anotimpuri[2];
+            }
+            if (vara.includes(luna_r)){
+              test = vector_anotimpuri[3];
+            }
+            if (imag.anotimp && imag.anotimp.includes(test)) { %>
+        <figure>
+            <picture>
+                <source srcset="<%- imag.fisier_mediu %>" media="(max-width: 1000px)"/>
+                <img src="<%- imag.fisier %>" alt="briose">
+            </picture>
+        <figcaption><%- imag.descriere %></figcaption>
+        </figure>
+        <% } %>
+    <% } %>
+    </div>
+    </section>

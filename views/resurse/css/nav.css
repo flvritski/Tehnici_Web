@@ -49,7 +49,7 @@
 
 .current {
   color:red; 
-  border:1px solid red;
+  border:3px solid red;
 }
 
 .fa-solid {
@@ -221,6 +221,10 @@ nav label {
   }
   .fa-3x{
     display: none;
+  }
+
+  nav label{
+    display: block;
   }
 
   body, footer {

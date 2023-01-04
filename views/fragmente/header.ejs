@@ -8,7 +8,7 @@
     <nav>
     
         <label id="hamburger" for="toggle">
-            <img src="../resurse/download.png" alt="menu">
+            <img src="/resurse/download.png" alt="menu">
         </label>
         <input id="toggle" type="checkbox">
 
@@ -44,9 +44,19 @@
                 </ul>
             
             </li>
-            <li><div><a href="#">Profilul meu</a></div></li>
-            <li><div><a href="#">Contact</a></div></li>
             <li><div><a href="#grid-zona-8">Contact</a></div></li>
+            <% if(locals.utilizator && locals.utilizator.rol=="admin") { %>
+                <li><a href="/useri">Useri</a></li>
+            <% } %>
+            <% if(locals.utilizator) { %>
+                <li><div><%- locals.utilizator.username %></div>
+                    <ul>
+                        <li><a href="/profil">Profil</a></li>
+                        <li><a href="/logout">Logout</a></li>
+                    </ul>
+                </li>
+            <% } %>
+
             <button id="tema" style="
             border-bottom-width: 0px;
             padding-bottom: 0px;
