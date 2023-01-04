@@ -1,40 +1,27 @@
-const id = Symbol("id");
 
-const ADMIN = Symbol("Admin");
-const MODERATOR = Symbol("Moderator");
-const CLIENT = Symbol("Client");
+/**
+ @typedef Drepturi
+ @type {Object}
+ @property {Symbol} vizualizareUtilizatori Dreptul de a intra pe  pagina cu tabelul de utilizatori.
+ @property {Symbol} stergereUtilizatori Dreptul de a sterge un utilizator
+ @property {Symbol} cumparareProduse Dreptul de a cumpara
 
-
-const createProdus = Symbol("createProdus")
-const readProdus = Symbol("readProdus")
-const updateProdus = Symbol("updateProdus")
-const deleteProdus = Symbol("deleteProdus")
-const createUser = Symbol("createUser")
-const readUser = Symbol("readUser")
-const updateUser = Symbol("updateUser")
-const deleteUser = Symbol("deleteUser")
-const canPurchase = Symbol("canPurchase")
-
-drepturi = [
-  {  
-    [id]: ADMIN,
-    name: ADMIN.description,
-    rights: [createProdus.description, readProdus.description, updateProdus.description, deleteProdus.description,
-         createUser.description, readUser.description, updateUser.description, deleteUser.description, 
-         canPurchase.description]
-  },
-  {
-    [id]: MODERATOR,
-    name: MODERATOR.description,
-    rights: [createUser.description, readUser.description, updateUser.description, deleteUser.description]
-  },
-  {
-    [id]: CLIENT,
-    name: CLIENT.description,
-    rights: [canPurchase.description]
-  }
-]
+ @property {Symbol} vizualizareGrafice Dreptul de a vizualiza graficele de vanzari
+ */
 
 
-module.exports = drepturi
+/**
+ * @name module.exports.Drepturi
+ * @type Drepturi
+ */
+const Drepturi = {
+	vizualizareUtilizatori: Symbol("vizualizareUtilizatori"),
+	stergereUtilizatori: Symbol("stergereUtilizatori"),
+	cumparareProduse: Symbol("cumparareProduse"),
+	vizualizareGrafice: Symbol("vizualizareGrafice"),
+	adaugareProduse: Symbol("adaugareProduse"),
+	modificareProduse: Symbol("modificareProduse"),
+	stergereProduse: Symbol("stergereProduse")
+}
 
+module.exports=Drepturi;

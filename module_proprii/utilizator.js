@@ -2,6 +2,7 @@ const AccesBD=require('./accesbd.js');
 const crypto = require("crypto")
 const nodemailer = require("nodemailer");
 const parole = require("./parole.js")
+const {RolFactory} = require("./roluri.js")
 
 class Utilizator{
     static tipConexiune="local";
@@ -23,6 +24,8 @@ class Utilizator{
         for(let prop in arguments[0]){
             this[prop]=arguments[0][prop]
         }
+        this.rol=this.rol.cod? RolFactory.creeazaRol(this.rol.cod): RolFactory.creeazaRol(this.rol)
+        
     }
 
     checkName(nume){
@@ -211,6 +214,9 @@ class Utilizator{
             return null;
         }
         
+    }
+    areDreptul(drept){
+        return this.rol.areDreptul(drept)
     }
 }
 

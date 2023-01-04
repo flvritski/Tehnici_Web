@@ -1,61 +1,66 @@
-const drepturi = require("./drepturi")
+
+const Drepturi=require('./drepturi.js');
 
 
 class Rol{
-    constructor(cod){
-        this.cod = cod
-    }
-    getRol(){
-        return this.cod;
-    }
-    showRol(){
-        console.log("Rolul meu este " + this.cod)
-    }
-    areDreptul(numeDrept){
-        for (let drept in drepturi){
-            if(drept.includes(numeDrept))
-            return true
-        }
-        return false
+    static get tip() {return "generic"}
+    static get drepturi() {return []}
+    constructor (){
+        this.cod=this.constructor.tip;
     }
 
-}
-
-class RolClient extends Rol{
-    constructor(rolClient){
-        super(rolClient)
-    }
-    getRol(){
-        return this.rolClient
-    }
-    showRol(){
-        console.log("Rolul meu este " + this.rolClient)
-    }
-    getDrept(){
-
+    areDreptul(drept){ //drept trebuie sa fie tot Symbol
+        console.log("in metoda rol!!!!")
+        return this.constructor.drepturi.includes(drept); //pentru ca e admin
     }
 }
 
 class RolAdmin extends Rol{
-    constructor(rolAdmin){
-        super(rolAdmin)
+    
+    static get tip() {return "admin"}
+    constructor (){
+        super();
     }
-    getRol(){
-        return this.rolAdmin
-    }
-    showRol(){
-        console.log("Rolul meu este " + this.rolAdmin)
+
+    areDreptul(){
+        return true; //pentru ca e admin
     }
 }
 
 class RolModerator extends Rol{
-    constructor(rolModerator){
-        super(rolModerator)
+    
+    static get tip() {return "moderator"}
+    static get drepturi() { return [
+        Drepturi.vizualizareUtilizatori,
+        Drepturi.stergereUtilizatori
+    ] }
+    constructor (){
+        super()
     }
-    getRol(){
-        return this.rolModerator
+}
+
+class RolClient extends Rol{
+    static get tip() {return "comun"}
+    static get drepturi() { return [
+        Drepturi.cumparareProduse
+    ] }
+    constructor (){
+        super()
     }
-    showRol(){
-        console.log("Rolul meu este " + this.rolModerator)
+}
+
+class RolFactory{
+    static creeazaRol(tip) {
+        switch(tip){
+            case RolAdmin.tip : return new RolAdmin();
+            case RolModerator.tip : return new RolModerator();
+            case RolClient.tip : return new RolClient();
+        }
     }
+}
+
+
+module.exports={
+    RolFactory:RolFactory,
+    RolAdmin:RolAdmin
 }

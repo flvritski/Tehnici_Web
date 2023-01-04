@@ -6,7 +6,7 @@
 .galerie-a {
   width: 600px;
   height: 450px;
-  border: 4px inset purple;
+  border: 4px inset navy;
   position: relative;
   overflow: hidden;
   margin-bottom: 5rem;
@@ -44,44 +44,36 @@
   animation-delay: 2s;
 }
 
-#galerie-animata figure:nth-of-type(9) {
+#galerie-animata figure:nth-of-type(7) {
   animation-delay: 0s;
 }
 
-#galerie-animata figure:nth-of-type(8) {
+#galerie-animata figure:nth-of-type(6) {
   animation-delay: 2s;
 }
 
-#galerie-animata figure:nth-of-type(7) {
+#galerie-animata figure:nth-of-type(5) {
   animation-delay: 4s;
 }
 
-#galerie-animata figure:nth-of-type(6) {
+#galerie-animata figure:nth-of-type(4) {
   animation-delay: 6s;
 }
 
-#galerie-animata figure:nth-of-type(5) {
+#galerie-animata figure:nth-of-type(3) {
   animation-delay: 8s;
 }
 
-#galerie-animata figure:nth-of-type(4) {
+#galerie-animata figure:nth-of-type(2) {
   animation-delay: 10s;
 }
 
-#galerie-animata figure:nth-of-type(3) {
+#galerie-animata figure:nth-of-type(1) {
   animation-delay: 12s;
 }
 
-#galerie-animata figure:nth-of-type(2) {
-  animation-delay: 14s;
-}
-
-#galerie-animata figure:nth-of-type(1) {
-  animation-delay: 16s;
-}
-
 #galerie-animata figure:nth-of-type(0) {
-  animation-delay: 18s;
+  animation-delay: 14s;
 }
 
 @keyframes gal_exemplu {
@@ -89,27 +81,27 @@
     z-index: 10;
     opacity: 1;
   } /*perioada 0-5% in care se afiseaza fara efect */
-  5.55555556% {
+  7.142857% {
     transform: rotateX(-0.2turn);
   } /*transformare inceput disparitie*/
   12% {
     opacity: 1;
   } /* de  aici doresc sa descresc si opacitatea;*/
-  11.1111110% {
+  14.285714% {
     z-index: 10;
     opacity: 0;
     transform: rotate(90deg) rotateX(-0.2turn);
   }
-  11.1111111% {
+  14.285715% {
     z-index: -10;
     transform: rotateX(-0.2turn);
   } /* il ascund cat mai in spate sa nu vina peste imaginile care erau mai sus in html decat el*/
-  88.8888888% {
+  85.714287% {
     opacity: 0;
     transform: rotateX(-0.2turn);
     z-index: -10;
   }
-  88.8888889% {
+  85.714288% {
     z-index: 0;
   } /*setez z-index la 0 ca sa revina la ordinea normala de afisare*/
   100% {

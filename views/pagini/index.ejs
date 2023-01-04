@@ -39,7 +39,14 @@
             </div>
             
             <div id="grid-zona-2-3-4">
-                <div id="calendar" style="border: 2px solid black;"><textarea>Lorem ipsum(placeholder)</textarea></div>
+                <div id="calendar" style="border: 2px solid black;">
+                    <p>Useri online:</p>
+                    <ol>
+                        <% for (let u of locals.useriOnline) { %>
+                            <li><%-u.username %>(<%- u.prenume %> <%- u.nume %>)</li> 
+                        <% } %>
+                    </ol>                    
+                </div>
                 <div id="tabel">             
                     <table id="tab-orar" style="width: 100%;">
                         <caption style="caption-side: bottom; text-align: center;">Orar</caption>

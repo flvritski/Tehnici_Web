@@ -5,7 +5,7 @@ const {Client} = require('pg');
 const {Utilizator} = require('./module_proprii/utilizator.js')
 const AccesBD = require("./module_proprii/accesbd.js")
 const path=require('path');
-
+const Drepturi = require("./module_proprii/drepturi.js")
 
 var ip = require('ip');
 const fs=require("fs");
@@ -23,6 +23,7 @@ for (let folder of foldere){
 var cssBootstrap = sass.compile(__dirname + "/views/resurse/scss/customizare-bootstrap.scss", {sourceMap:true});
 fs.writeFileSync(__dirname + "/views/resurse/css/biblioteci/customizare-bootstrap.css", cssBootstrap.css);
 const sharp = require('sharp');
+const e = require('express');
 
 // var client = new Client({database: "florinstefan",
 //   user: "florinstefan",
@@ -43,6 +44,7 @@ instantaBD.select({campuri: ["nume", "pret"], tabel: "instrumente", conditiiAnd:
 
 
 const app = express();
+app.use(["/produse_cos", "/cumpara"], express.json({limit:'2mb'})) //pt cosul virtual ca sa primeasca in obiect de tip json
 
 app.use(session({
   secret: 'abcdefg',
@@ -58,9 +60,49 @@ app.use("/node_modules", express.static(__dirname+"/node_modules"));
 app.use("/poze_uploadate", express.static(__dirname+"/poze_uploadate"));
 
 app.use("/*", function(req,res,next){
-  res.locals.utilizator=req.session.utilizator;
+  res.locals.Drepturi = Drepturi;
+  if(req.session.utilizator){
+    req.utilizator = res.locals.utilizator = new Utilizator(req.session.utilizator);
+  }
+  
   next()
 });
+
+function getIp(req){
+  var ip = req.headers["x-forwaded-for"]
+  if (ip){
+    let vect = ip.split(",");
+    return vect[vect.length-1]
+  }
+  else if (req.ip){
+    return req.ip
+  }
+  else {
+    return req.connection.remoteAddress;
+  }
+}
+
+app.all("/*", function(req, res, next){
+  let id_utiliz = req?.session?.utilizator?.id;
+  id_utiliz=id_utiliz?id_utiliz:null;
+  AccesBD.getInstanta().insert({
+    tabel: "accesari",
+    campuri:["ip", "user_id", "pagina"],
+    valori:[`'${getIp(req)}'`, `${id_utiliz}`, `'${req.url}'`]
+  }, function(err, rezQuery){
+    console.log(err)
+  })
+  next();
+});
+
+function stergeAccesariVechi(){
+  AccesBD.getInstanta().delete({tabel:"accesari", conditiiAnd:["now() - data_accesare >= interval '10 minutes' "]}, function(err, rez){
+    console.log(err)
+  })
+}
+stergeAccesariVechi();
+
+setInterval(stergeAccesariVechi, 10*60*1000)
 
 obGlobal={
   erori:null,
@@ -123,7 +165,16 @@ function compareNumbers(a, b) {
 app.get(["/", "/index", "/home", "/login"], function(req,res,next){
   let sir = req.session.succesLogin
   req.session.succesLogin=null
-  res.render("pagini/index" , {ip: req.ip, imagini: obGlobal.imagini, imagini_random: obGlobal.imagini_random, succesLogin:req?.session?.succesLogin });
+  client.query("select username, nume, prenume from utilizatori where id in (select distinct user_id from accesari where now()-data_accesare <= interval '5 minutes')",
+  function(err, rez){
+      let useriOnline=[];
+      if(!err && rez.rowCount!=0)
+          useriOnline=rez.rows
+
+      res.render("pagini/index", {ip: req.ip, imagini:obGlobal.imagini, succesLogin:sir, useriOnline:useriOnline});
+
+  });
+
 })
 
 app.get("/produse", function(req, res){
@@ -179,39 +230,22 @@ app.get("/produs/:id", function(req,res){
     });
 })
 
-app.get("*/galerie-animata.css",function(req, res){
-
-  var sirScss=fs.readFileSync(__dirname+"/views/resurse/scss/galerie_animata.scss").toString("utf8");
-  var culori=["navy","black","purple","grey"];
-  var numar_imagini = [7,8,9,11];
-  var indiceAleator=Math.floor(Math.random()*culori.length);
-  var culoareAleatoare=culori[indiceAleator]; 
-  obGlobal.imagini_random = obGlobal.imagini
-    .map(x=> ({x,r: Math.random()}))
-    .sort((a,b) => a.r - b.r)
-    .map(a => a.x)
-    .slice(0, numar_imagini[indiceAleator]);
-  
-  console.log(obGlobal.imagini_random);
-
-  rezScss=ejs.render(sirScss,{culoare:culoareAleatoare, nrimag:numar_imagini[indiceAleator]});
-  console.log(rezScss);
-  var caleScss=__dirname+"/views/temp/galerie_animata.scss"
-  fs.writeFileSync(caleScss,rezScss);
-  try {
-      rezCompilare=sass.compile(caleScss,{sourceMap:true});
-      
-      var caleCss=__dirname+"/views/resurse/css/galerie_animata.css";
-      console.log(caleCss);
-      fs.writeFileSync(caleCss,rezCompilare.css);
-      res.setHeader("Content-Type","text/css");
-      res.sendFile(caleCss);
+app.post("/produse_cos", function(req, res){
+  console.log(req.body)
+  if(req.body.ids_prod.length != 0){
+    AccesBD.getInstanta().select({tabel:"instrumente", campuri:"nume, descriere, pret, gramaj, imagine".split(","), conditiiAnd:[`id in (${req.body.ids_prod})`]}, function(err, rez){
+      if(err){
+        res.send([])
+      }
+      else {
+        res.send(rez.rows)
+      }
+    })
   }
-  catch (err){
-      console.log(err);
-      res.send("Eroare");
+  else {
+    res.send([])
   }
-});
+})
 
 
 
@@ -305,7 +339,8 @@ app.post("/login", function(req,res){
       let parolaCriptata = Utilizator.criptareParola(obparam.parola);
       if (u.parola == parolaCriptata && u.confirmat_mail == true){
         console.log(u.confirmat_mail)
-        // u.poza = path.join("poze_uploadate", u.username,u.poza)
+        console.log(u.cale_imagine)
+        u.cale_imagine=u.cale_imagine?path.join("poze_uploadate",u.username, u.cale_imagine):"";
         obparam.req.session.utilizator = u;
         obparam.req.session.succesLogin="Bravo, te-ai logat!"
         obparam.res.redirect("/index");
@@ -353,8 +388,8 @@ app.get("/cod/:username/:token", function(req, res){
 app.post("/profil", function(req, res){
   console.log("profil");
   if (!req.session.utilizator){
-      randeazaEroare(res,403,)
-      res.render("pagini/eroare_generala",{text:"Nu sunteti logat."});
+      renderError(res,403,)
+      res.render("pagini/403.ejs",{text:"Nu sunteti logat."});
       return;
   }
   var formular= new formidable.IncomingForm();
@@ -386,6 +421,7 @@ app.post("/profil", function(req, res){
               req.session.utilizator.email= campuriText.email;
               req.session.utilizator.culoare_chat= campuriText.culoare_chat;
               res.locals.utilizator=req.session.utilizator;
+              console.log(res.locals.utilizator)
           }
 
 
@@ -397,11 +433,75 @@ app.post("/profil", function(req, res){
   });
 });
 
+
+/////////Administrare
+app.get("/useri", function(req,res,next){
+  if(req?.utilizator?.areDreptul?.(Drepturi.vizualizareUtilizatori)){
+    AccesBD.getInstanta().select({tabel:"utilizatori", campuri:["*"]}, function(err, rezQuery){
+      console.log(err)
+      res.render("pagini/useri", {useri: rezQuery.rows})
+    })
+  } 
+  else {
+    renderError(res, 403)
+  }
+})
+
+app.post("/sterge_utiliz", function(req,res){
+  if(req?.utilizator?.areDreptul?.(Drepturi.stergereUtilizatori)){
+    var formular = new formidable.IncomingForm()
+    formular.parse(req,function(err, campuriText, campuriFile){
+      AccesBD.getInstanta().delete({tabel:"utilizatori", conditiiAnd:[`id=${campuriText.id_utiliz}`]}, function(err){
+        console.log(err)
+        res.redirect("/useri")
+      })
+    })
+  }
+  else {
+    renderError(res, 403)
+  }
+})
+
 app.get("/logout", function(req,res){
   req.session.destroy()
   res.locals.utilizator = null;
   res.render("pagini/logout");
 })
+
+
+app.get("*/galerie-animata.css",function(req, res){
+
+  var sirScss=fs.readFileSync(__dirname+"/views/resurse/scss/galerie_animata.scss").toString("utf8");
+  var culori=["navy","black","purple","grey"];
+  var numar_imagini = [7,8,9,11];
+  var indiceAleator=Math.floor(Math.random()*culori.length);
+  var culoareAleatoare=culori[indiceAleator]; 
+  obGlobal.imagini_random = obGlobal.imagini
+    .map(x=> ({x,r: Math.random()}))
+    .sort((a,b) => a.r - b.r)
+    .map(a => a.x)
+    .slice(0, numar_imagini[indiceAleator]);
+  
+  console.log(obGlobal.imagini_random);
+
+  rezScss=ejs.render(sirScss,{culoare:culoareAleatoare, nrimag:numar_imagini[indiceAleator]});
+  console.log(rezScss);
+  var caleScss=__dirname+"/views/temp/galerie_animata.scss"
+  fs.writeFileSync(caleScss,rezScss);
+  try {
+      rezCompilare=sass.compile(caleScss,{sourceMap:true});
+      
+      var caleCss=__dirname+"/views/resurse/css/galerie_animata.css";
+      console.log(caleCss);
+      fs.writeFileSync(caleCss,rezCompilare.css);
+      res.setHeader("Content-Type","text/css");
+      res.sendFile(caleCss);
+  }
+  catch (err){
+      console.log(err);
+      res.send("Eroare");
+  }
+});
 
 app.get("*/galerie-animata.css.map", function(req,res) {
   res.sendFile(path.join(__dirname, "/views/temp/galerie_animata.css.map"));
