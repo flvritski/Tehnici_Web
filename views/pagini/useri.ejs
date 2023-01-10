@@ -15,18 +15,19 @@
     <div class="afisaj">
         <h2>Useri</h2>
 
-		<table id="useri">
+		<table class="table table-hover table-striped table-bordered" id="useri">
 		  <tr>
-			<th>id</th><th>Username</th><th>Nume</th><th>Prenume</th><th>Data</th><th>Rol</th>
+			<th scope="col">id</th><th scope="col">Username</th><th scope="col">Nume</th><th scope="col">Prenume</th><th scope="col">Email</th><th scope="col">Data</th><th scope="col">Rol</th>
 		  </tr>
 
 		  <% for (var i = 0; i < useri.length; i++) { 
 				if(useri[i].rol=="comun"){
 				%>
 				<tr>
-				  <td><%= useri[i].id %></td>
+				  <td scope="row"><%= useri[i].id %></td>
 				  <td><%= useri[i].username %></td>
 				  <td><%= useri[i].nume %></td>
+				  <td><%= useri[i].prenume %></td>
 				  <td><%= useri[i].email %></td>
 				  <%  
 					d=new Date(useri[i].data_adaugare)
@@ -34,6 +35,15 @@
 				  %>
 				  <td><%=  sir_data %></td>
 				   <td><%=  useri[i].rol %></td>
+				   <td>
+						<form id="form_inreg"  method="post" class="date"  action="/sterge_utiliz"  enctype="multipart/form-data">
+							<p>
+								<input type="submit" value="Sterge Utilizator" >
+								<input type="hidden" value="<%- useri[i].id %>" name="id_utiliz">
+								<input type="hidden" value="<%- useri[i].username %>" name="username_utiliz"
+							</p>
+						</form>
+					</td>
 				</tr> 
    
 				<% } %>			

@@ -108,6 +108,27 @@ class AccesBD{
             return null;
         }
     }
+    //updateAsync
+    async updateAsync({tabel="", campuri=[], valori=[], conditiiAnd=[]} = {}, callback){
+        if (campuri.length != valori.length)
+            throw new Error("Numarul de campuri difera de nr de valori");
+        let campuriActualizate = [];
+        for (let i=0;i<campuri.length;i++)
+            campuriActualizate.push(`${campuri[i]}='${valori[i]}'`);
+        let conditieWhere = "";
+        if(conditiiAnd.length >0)
+            conditieWhere=`where ${conditiiAnd.join(" and ")}`;
+        let comanda = `update ${tabel} set ${campuriActualizate.join(", ")} ${conditieWhere}`;
+        console.log("+++++++++++++++++++",comanda)
+        try{
+            let rez = await this.client.query(comanda)
+            console.log("updateAsync:", rez)
+            return rez
+        } catch (e){
+            console.log(e)
+            return null;
+        }
+    }
 
 }
 

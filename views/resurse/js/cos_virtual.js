@@ -4,7 +4,7 @@ window.addEventListener("load",function(){
 
 	if (prod_sel){
 		var vect_ids=prod_sel.split(",");
-		fetch("/produse_cos", {		
+		fetch("/produse_cos", {		//apel prin JS, in loc sa scrii in bara de adrese, faci prin JS o cerere catre server
 
 			method: "POST",
 			headers:{'Content-Type': 'application/json'},

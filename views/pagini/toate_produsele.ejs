@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html  lang="ro">
+    <head>
+        <meta name="description" content="E-HomeRecordingStudio  - utilizatori.">
+        <meta name="keywords" content="e-home, records, studio, utilizatori">
+        <!-- <link rel="stylesheet" href="/resurse/css/instrumente.css" type="text/css" /> -->
+        <title>E-HomeRecords - utilizatori</title>
+        <%- include("../fragmente/head") %>     
+        <script type="text/javascript" src=/resurse/js/produse.js></script>
+    </head>
+    <body>
+    <%- include("../fragmente/header") %>
+
+    <main>
+    <div class="afisaj">
+        <h2>Produse</h2>
+        <div>
+        <a href="/inregistrare-produse" >
+            <button type="button" class="btn btn-success">Adauga Produse</button>
+         </a>    
+         <a href="/modifica-produse" >
+            <button type="button" class="btn btn-warning">Modifica Produse</button>
+         </a>   
+         </div>     
+         <table id="instrumente">
+		  <tr>
+			<th>id</th><th>Nume</th><th>Pret</th><th>Garantie</th><th>Categorie</th><th>Voucher</th>
+		  </tr>
+
+		  <% for (var i = 0; i < instrumente.length; i++) { %>
+				
+				<tr>
+                    <td><%= instrumente[i].id %></td>
+                    <td><%= instrumente[i].nume %></td>
+                    <td><%= instrumente[i].pret %></td>
+                    <td><%= instrumente[i].garantie %></td>
+                    <td><%=  instrumente[i].categorie %></td>
+                    <td><%=  instrumente[i].voucher %></td>
+				</tr>    
+		  <% } %>
+		</table>
+		
+		<p>Sterge produs</p>
+		<form id="sterge" method="post" action="/sterge_produse">
+			<label>
+				Id: <input type="text" name="id_produs" value="">
+			</label>
+			
+			<input type="submit" value="Submit">
+		</form>
+	</div>
+</main>
+
+
+    <%- include("../fragmente/footer") %>
+
+</body>
+</html>

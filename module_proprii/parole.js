@@ -1,4 +1,4 @@
-v_intervale = [[48,57],[65,90],[97,122]]
+v_intervale = [[65,90],[97,122]]
 sirAlphaNum = ""
 for (let interval of v_intervale){
     for (let i=interval[0]; i<=interval[1];i++){

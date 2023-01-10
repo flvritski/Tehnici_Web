@@ -46,3 +46,61 @@ create bitmap index idx_sex_angajati on Angajati(sex)
 select * from Angajati
 
 where sex = 'F'
+
+
+
+--ex 11
+
+
+BEGIN
+   DECLARE 
+   X VARCHAR2(3) := 'PQRS';
+   BEGIN
+      dbms_output.put_line(X)
+      EXCEPTION 
+      WHEN VALUE_ERROR THEN 
+      dbms_output.put_line('INVALID STRING LENGTH');
+   END;
+EXCEPTION
+WHEN VALUE_ERROR THEN
+dbms_output.put_line('STRING LENGTH IS GREATER THAN THE SIZE OF VARIABLE X');
+END;
+/
+
+
+ --ex 12
+ --- PL/SQL blocks and subprograms should raise an exception only when an error makes it undesirable or impossible to finish processing. 
+ -- You can place RAISE statements for a given exception anywhere within the scope of that exception.
+ -- In the following example, you alert your PL/SQL block to a user-defined exception named out_of_stock:
+
+ DECLARE
+   out_of_stock   EXCEPTION;
+   numar NUMBER := 0;
+BEGIN
+   IF numar < 1 THEN
+      RAISE out_of_stock; -- ridica exceptia pe care am definit-o
+   END IF;
+EXCEPTION
+   WHEN out_of_stock THEN
+      -- trateaza eroarea
+      dbms_output.put_line('Am intampinat eroare out_of_stock');
+END;
+/
+
+
+
+
+--You can also raise a predefined exception explicitly. 
+--That way, an exception handler written for the predefined exception can process other errors, as the following example shows:
+DECLARE
+   acct_type INTEGER := 7;
+BEGIN
+   IF acct_type NOT IN (1, 2, 3) THEN
+      RAISE INVALID_NUMBER;  -- ridica exceptia predefinita
+   END IF;
+EXCEPTION
+   WHEN INVALID_NUMBER THEN
+      dbms_output.put_line('Tratam inputul invalid prin rolling back');
+      ROLLBACK;
+END;
+/

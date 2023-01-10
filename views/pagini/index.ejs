@@ -131,7 +131,16 @@
                     </table> 
                 </div>
                 <div id="anunturi" style="border: 2px solid black">
-                    <textarea>Lorem ipsum(placeholder)</textarea>
+                    <% if(locals.utilizator) { %>
+                        <section>
+                            <h2>Profil</h2>
+                            <p><%= locals.raspuns %></p>
+                            <img src="/<%- locals.utilizator.cale_imagine %>" alt="nu ati incarcat poza de profil" />
+                            <h4> Bine ati venit, <%-locals.utilizator.username %>!</h4>
+                        </section>
+                        <% } else { %>
+                            <p>Nu sunteti logat</p>
+                        <% } %>
                 </div>
             </div>
             
@@ -188,24 +197,7 @@
                 </section>
                 
                 <p style="border: 2px solid black;">Lorem ipsum <%- locals.ip %></p>
-                <% if(!locals.utilizator) { %>
-                    <form id="form_inreg"  method="post" class="date"  action="/login"  enctype="multipart/form-data">
-                        <p>
-                            <label>
-                                Username: <input type="text" name="username" id="inp-username" value="" required pattern="[A-Za-z0-9]+">
-                            </label>
-                        </p>
-                        <p>
-                            <label>
-                                Parola: <input id="parl" type="password" required  name="parola" value="">
-                            </label>
-                        </p>
-                        <p><input type="submit" value="Logare"></p>
-                    </form>
-                    <p><%- locals.eroareLogin %></p>
-                    <% } else {%>
-                       <%- locals.succesLogin %>
-                    <% }  %>
+                
     
             </div>
             <section>

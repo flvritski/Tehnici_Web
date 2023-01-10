@@ -52,6 +52,7 @@
                     <li><a href="/useri">Useri</a></li>
                     <li><a href="/grafice">Grafice</a></li>
                     <li><a href="/comenzi">Comenzi</a></li>
+                    <li><a href="/toate_produsele">Produse</a></li>
                 </ul>
                 </li>
             <% } %>
@@ -63,6 +64,8 @@
                     </ul>
                 </li>
             <% } %>
+
+            
 
             <button id="tema" style="
             border-bottom-width: 0px;
@@ -79,6 +82,32 @@
 
         </ul>
     </nav>  
+    <% if(!locals.utilizator) { %>
+        <ul style="background-color:whitesmoke;">
+        <form id="form_inreg" style="display: flex; list-style:none; " method="post" class="date"  action="/login"  enctype="multipart/form-data">
+            <li>
+            <p>
+                <label>
+                    Username: <input type="text" name="username" id="inp-username" value="" required pattern="[A-Za-z0-9]+">
+                </label>
+            </p>
+        </li>
+            <li>
+            <p>
+                <label>
+                    Parola: <input id="parl" type="password" required  name="parola" value="">
+                </label>
+            </p>
+        </li>
+            <li>
+            <p><input type="submit" value="Logare"></p>
+            </li>
+        </form>
+        </ul>
+        <p><%- locals.eroareLogin %></p>
+        <% } else {%>
+           <%- locals.succesLogin %>
+        <% }  %>
 </header>
 
 <script>

@@ -16,20 +16,26 @@ class Utilizator{
     constructor({id, username, nume, prenume, email, parola, rol, data_nasterii, ocupatie, culoare_chat="black", confirmat_mail=false, poza}={}) {
         this.id=id;
         try{
-            if (this.checkUsername(username))    this.username = username;
-
+            if (this.checkUsername(username))    {this.username = username;}
+            if (this.checkPrenume(prenume))     {this.prenume=prenume;}
         }
         catch(e) {this.#eroare=e.message}
 
         for(let prop in arguments[0]){
             this[prop]=arguments[0][prop]
         }
+        if(this.rol){
         this.rol=this.rol.cod? RolFactory.creeazaRol(this.rol.cod): RolFactory.creeazaRol(this.rol)
+        }
         
     }
 
     checkName(nume){
-        return nume!='' && nume.match(new RegExp("^[A-Z][a-z]+$"))
+        return nume!='' && nume.match(new RegExp("^[a-zA-Z\\s-]+$"))
+    }
+
+    checkPrenume(prenume){
+        return prenume != '' && prenume.match(new RegExp("^[a-zA-Z\\s-]+$"))
     }
 
     set setareNume(nume){
@@ -47,6 +53,14 @@ class Utilizator{
             throw new Error("username gresit");
         }
     }
+
+    set setarePrenume(prenume){
+        if (this.checkPrenume(prenume))  this.prenume=prenume;
+        else {
+            throw new Error("prenume gresit");
+        }
+    }
+
 
     checkUsername(usernume){
         return usernume!='' && usernume.match(new RegExp("^[A-Za-z0-9]+$"))
@@ -70,7 +84,7 @@ class Utilizator{
     salvareUtilizator(){
         let parolaCriptata = Utilizator.criptareParola(this.parola)
         let utiliz = this;
-        let token = parole.genereazaToken(100);
+        let token = parole.genereazaToken(40);
         let confirmatMail = false
         AccesBD.getInstanta(Utilizator.tipConexiune).insert({tabel:Utilizator.tabel, campuri:["username", "nume", "prenume", "parola", "email", 
                 "data_nasterii", "ocupatie", "culoare_chat", "cod", "confirmat_mail", "cale_imagine"], valori:[`'${this.username}'`,`'${this.nume}'`,`'${this.prenume}'`,`'${parolaCriptata}'`,
@@ -80,7 +94,7 @@ class Utilizator{
                 }
                 if(!err)
                 utiliz.trimiteMail("Te-ai inregistrat cu succes", "Username-ul tau este " + utiliz.username,
-                `<h1>Salut!</h1><p style='color:blue'>Username-ul tau este ${utiliz.username}.</p> <p><a href='http://${Utilizator.numeDomeniu}/cod/${utiliz.username}/${token}'>Click aici pentru confirmare</a></p>`)
+                `<h1>Salut!</h1><p style='color:blue'>Username-ul tau este <b style="color:green">${utiliz.username}</b>.</p> <p><a href='http://${Utilizator.numeDomeniu}/cod/${utiliz.username}/${token}'>Click aici pentru confirmare</a></p>`)
             })
     }
 
@@ -92,69 +106,7 @@ class Utilizator{
         })
     }
 
-    static cauta(obparam, callback){
-        let listaUtiliz = []
-        let listaConditii = []
-        let conditii = ""
-        if(Object.keys(obparam).length == 1 ){
-        AccesBD.getInstanta(Utilizator.tipConexiune).select({tabel:"utilizatori", campuri:['*'], conditiiAnd:[`${Object.keys(obparam)}='${Object.values(obparam)}'`]}, function(err, rezSelect){
-            if(err || rezSelect.rowCount == 0){
-                console.error("Utilizator:", err)
-                console.log("Utilizator", rezSelect.rows)
-                throw new Error();  
-            }
-            for (let i=0;i<rezSelect.rows.length;i++){
-                let u = new Utilizator({id:rezSelect.rows[i].id, 
-                    username:rezSelect.rows[i].username,
-                    nume: rezSelect.rows[i].nume,
-                    prenume: rezSelect.rows[i].prenume,
-                    email: rezSelect.rows[i].email,
-                    parola: rezSelect.rows[i].parola,
-                    rol: rezSelect.rows[i].rol,
-                    culoare_chat: rezSelect.rows[i].culoare_chat,
-                    poza: rezSelect.rows[i].poza,
-                    confirmat_mail: rezSelect.rows[i].confirmat_mail,
-                    data_nasterii: rezSelect.rows[i].data_nasterii,
-                    ocupatie: rezSelect.rows[i].ocupatie
-                 })
-                 listaUtiliz.push(u)
-            }
-            callback(listaUtiliz, obparam)
-            })
-        }
-        else if (Object.keys(obparam).length > 1){
-            for(let i=0;i<Object.keys(obparam).length;i++){
-                conditii = (Object.keys(obparam)[i] + "=" + "'"+Object.values(obparam)[i]+ "'").trim()
-                listaConditii.push(conditii)
-            }
-            console.log(listaConditii)
-            AccesBD.getInstanta(Utilizator.tipConexiune).select({tabel: "utilizatori", campuri:['*'], conditiiAnd:listaConditii}, function(err, rezSelect){
-                if(err || rezSelect.rowCount == 0){
-                    console.error("Utilizator:", err)
-                    console.log("Utilizator", rezSelect.rows)
-                    throw new Error();  
-                }
-                for (let i=0;i<rezSelect.rows.length;i++){
-                    console.log(rezSelect.rows[i])
-                    let u = new Utilizator({id:rezSelect.rows[i].id, 
-                        username:rezSelect.rows[i].username,
-                        nume: rezSelect.rows[i].nume,
-                        prenume: rezSelect.rows[i].prenume,
-                        email: rezSelect.rows[i].email,
-                        parola: rezSelect.rows[i].parola,
-                        rol: rezSelect.rows[i].rol,
-                        culoare_chat: rezSelect.rows[i].culoare_chat,
-                        poza: rezSelect.rows[i].poza,
-                        confirmat_mail: rezSelect.rows[i].confirmat_mail,
-                        data_nasterii: rezSelect.rows[i].data_nasterii,
-                        ocupatie: rezSelect.rows[i].ocupatie
-                     })
-                     listaUtiliz.push(u)
-                }
-                callback(listaUtiliz, obparam)
-            })
-        }
-    }
+  
 
 
     async trimiteMail(subiect, mesajText, mesajHtml, atasamente=[]){
@@ -180,6 +132,41 @@ class Utilizator{
         })
         console.log("trimis mail");
     }
+
+    static async modificaAsync(obParam, obConditii=[]){ //{confirmat_mail: true}
+        if (!obParam) return null;
+        
+        try{
+            var listaConditiiAnd = [];
+            var listaUtiliz = []; 
+            for (let prop in obConditii){
+                listaConditiiAnd.push(`${prop} = '${obConditii[prop]}'`)
+            }
+            let rezCauta = await AccesBD.getInstanta(Utilizator.tipConexiune).updateAsync({tabel:"utilizatori", 
+                                                        campuri:Object.keys(obParam), 
+                                                        valori:Object.values(obParam), 
+                                                        conditiiAnd:listaConditiiAnd})
+            // UPDATE table_name
+            // SET column1 = value1, column2 = value2, ...
+            // WHERE condition;
+            //
+            //
+
+            if(rezCauta.rowCount != 0){
+                for (var i=0;i<rezCauta.rowCount;i++){
+                let u = new Utilizator(rezCauta.rows[i])
+                listaUtiliz.push(u)
+                }
+                return listaUtiliz
+            }
+        }
+        catch(e) {
+            console.log(e)
+            console.log("cautaAsync: Nu am gasit utilizatorul")
+            return null;
+        }
+    }
+   
 
     static getUtilizDupaUsername (username,obparam, proceseazaUtiliz){
         if (!username) return null;
@@ -214,6 +201,57 @@ class Utilizator{
             return null;
         }
         
+    }
+    static cauta(obParam, proceseazaUtiliz){
+        var listaConditiiAnd = [];
+        for (let prop in obParam){
+            listaConditiiAnd.push(`${prop} = '${obParam[prop]}'`)
+        }
+         AccesBD.getInstanta(Utilizator.tipConexiune).selectAsync({tabel:"utilizatori", campuri:['*'], conditiiAnd:listaConditiiAnd}, function(err, listaUtiliz){
+            if(err){
+                console.error("Utilizator:", err);
+                console.log("Utilizator",rezSelect.rows.length);
+                //throw new Error()
+                eroare=-2;
+            }
+            else if(rezSelect.rowCount==0){
+                eroare=-1;
+            }
+            //constructor({id, username, nume, prenume, email, rol, culoare_chat="black", poza}={})
+            listaUtiliz=[];
+            for (var i=0;i<rezCauta.rowCount;i++){
+                let u = new Utilizator(rezCauta.rows[i])
+                listaUtiliz.push(u)
+            }
+            proceseazaUtiliz(listaUtiliz, eroare);
+         })
+            
+    }
+
+    static async cautaAsync(obParam){
+        if (!obParam) return null;
+        
+        try{
+            var listaConditiiAnd = [];
+            var listaUtiliz = []; 
+            for (let prop in obParam){
+                listaConditiiAnd.push(`${prop} = '${obParam[prop]}'`)
+            }
+            let rezCauta = await AccesBD.getInstanta(Utilizator.tipConexiune).selectAsync({tabel:"utilizatori", campuri:['*'], conditiiAnd:listaConditiiAnd})
+            
+            if(rezCauta.rowCount != 0){
+                for (var i=0;i<rezCauta.rowCount;i++){
+                let u = new Utilizator(rezCauta.rows[i])
+                listaUtiliz.push(u)
+                }
+                return listaUtiliz
+            }
+        }
+        catch(e) {
+            console.log(e)
+            console.log("cautaAsync: Nu am gasit utilizatorul")
+            return null;
+        }
     }
     areDreptul(drept){
         return this.rol.areDreptul(drept)
